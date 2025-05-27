@@ -1,10 +1,16 @@
 using CastingApp.Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using DotNetEnv;
+using Microsoft.AspNetCore.Identity;
 
 Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication();
 
 var connectionStringBase = builder.Configuration.GetConnectionString("DefaultConnection");
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
