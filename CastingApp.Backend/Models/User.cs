@@ -1,6 +1,6 @@
 ﻿using System.Runtime;
 
-namespace CastingApp.Backend.Model;
+namespace CastingApp.Backend.Models;
 
 public class User
 {

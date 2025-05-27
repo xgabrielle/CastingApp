@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CastingApp.Backend.Model;
+namespace CastingApp.Backend.Models;
 
 public class Profile
 {
