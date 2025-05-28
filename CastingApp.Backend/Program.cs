@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using CastingApp.Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using DotNetEnv;
@@ -12,19 +13,23 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 builder.Services.AddAuthentication();
 
-var connectionStringBase = builder.Configuration.GetConnectionString("DefaultConnection");
-var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
-string? finalConnectionString = !string.IsNullOrEmpty(dbPassword) 
-    ? $"{connectionStringBase}Password={dbPassword}"
-    : connectionStringBase;
+var connectionString = $"Host={Env.GetString("DB_HOST")};Port={Env.GetString("DB_PORT")};Database={Env.GetString("DB_NAME")};Username={Env.GetString("DB_USERNAME")};Password={Env.GetString("DB_PASSWORD")}";
 
-if (string.IsNullOrEmpty(dbPassword))
-    Console.WriteLine("Warning: DB_PASSWORD environment variable not set.");
+Console.WriteLine($"Connection string: {connectionString}");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new Exception("Connection string is missing in configuration.");
+}
 
 // Register PostgreSQL EF Core DbContext
-builder.Services.AddNpgsql<ApplicationDbContext>(finalConnectionString);
+builder.Services.AddNpgsql<ApplicationDbContext>(connectionString);
 
+Console.WriteLine($"🔐 Final connection string: {connectionString}");
+
+// Register controllers
+builder.Services.AddControllers();
 
 // Swagger (OpenAPI)
 builder.Services.AddEndpointsApiExplorer();
@@ -40,6 +45,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Map controller endpoints
+app.MapControllers();
 
 app.Run();
 
