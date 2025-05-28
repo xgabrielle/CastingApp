@@ -5,25 +5,31 @@ using CastingApp.Backend.DTO;
 
 namespace CastingApp.Backend.Controllers;
 [ApiController]
-[Route("controller")]
+[Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
     private readonly UserManager<IdentityUser> _userManager;
 
-    internal AuthController(UserManager<IdentityUser> userManager)
+    public AuthController(UserManager<IdentityUser> userManager)
     {
         _userManager = userManager;
     }
 
     [HttpPost("register")]
-    internal async Task<IActionResult> Register([FromBody] RegisterDto model)
+    public async Task<IActionResult> Register([FromBody] RegisterDto model)
     {
         var user = new IdentityUser { UserName = model.Username, Email = model.Email, };
         var result = await _userManager.CreateAsync(user, model.Password);
 
         if (result.Succeeded)
+        {
+            Console.WriteLine("User Created");
             return Ok("User Created");
-   
-        return BadRequest(result.Errors);
+        }
+        else
+        {
+            Console.WriteLine("Bad Request");
+            return BadRequest(result.Errors);
+        }
     }
 }
