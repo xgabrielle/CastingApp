@@ -5,13 +5,13 @@ namespace CastingApp.Backend.DTO;
 public class RegisterDto
 {
     [Required]
-    internal string Username { get; set; }
+    public required string Username { get; set; }
     
     [Required]
     [EmailAddress]
-    internal string Email { get; set; }
+    public required string Email { get; set; }
     
     [Required]
     [MinLength(5)]
-    internal string Password { get; set; }
+    public required string Password { get; set; }
 }

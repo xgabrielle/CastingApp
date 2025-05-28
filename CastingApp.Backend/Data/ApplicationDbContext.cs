@@ -10,8 +10,8 @@ namespace CastingApp.Backend.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
         
-        internal DbSet<User> Users { get; set; }
-        internal DbSet<Profile> Profiles { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

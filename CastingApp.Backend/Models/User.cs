@@ -1,13 +1,19 @@
-﻿using System.Runtime;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime;
 
 namespace CastingApp.Backend.Models;
 
 public class User
 {
     public int Id { get; set; }
-    internal string Username { get; set; }
-    internal string Email { get; set; }
-    internal string PasswordHash { get; set; }
+    [Required]
+    public string? Username { get; set; } = String.Empty;
+
+    [EmailAddress] 
+    public string Email { get; set; } = String.Empty;
     
-    internal Profile Profile { get; set; }
+    [Required]
+    public string PasswordHash { get; set; } = String.Empty;
+    
+    public Profile? Profile { get; set; }
 }
