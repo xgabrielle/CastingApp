@@ -3,28 +3,31 @@ using Microsoft.AspNetCore.Mvc;
 using CastingApp.Backend.Data;
 using Microsoft.AspNetCore.Identity;
 using CastingApp.Backend.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace CastingApp.Backend.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class ProfileController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
-    private UserManager<IdentityUser> _userManager;
+    private UserManager<ApplicationUser> _userManager;
     
-    public ProfileController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+    public ProfileController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
         _userManager = userManager;
     }
 
-    private async Task<IdentityUser> GetCurrentUser()
+    private async Task<ApplicationUser> GetCurrentUser()
     {
         return await _userManager.GetUserAsync(User);
     }
 
+    [HttpGet]
     public async Task<IActionResult> GetProfile()
     {
         var user = await GetCurrentUser();
@@ -45,6 +48,6 @@ public class ProfileController : ControllerBase
             profile.Location,
             profile.ProfileImageUrl
         };
-        return Ok(profile);
+        return Ok(result);
     }
 }
