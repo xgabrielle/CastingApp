@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CastingApp.Backend.DTO;
 using CastingApp.Backend.Models;
+using CastingApp.Backend.Services;
 
 
 namespace CastingApp.Backend.Controllers;
@@ -10,10 +11,12 @@ namespace CastingApp.Backend.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly ITokenService _tokenService;
 
-    public AuthController(UserManager<ApplicationUser> userManager)
+    public AuthController(UserManager<ApplicationUser> userManager, ITokenService tokenService)
     {
         _userManager = userManager;
+        _tokenService = tokenService;
     }
 
     [HttpPost("register")]
@@ -32,5 +35,18 @@ public class AuthController : ControllerBase
             Console.WriteLine("Bad Request");
             return BadRequest(result.Errors);
         }
+    }
+    
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginDto model)
+    {
+        var user = await _userManager.FindByNameAsync(model.Username);
+        if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+        {
+            var token = _tokenService.CreateToken(user);
+            return Ok(new { token });
+        }
+
+        return Unauthorized("Invalid credentials");
     }
 }

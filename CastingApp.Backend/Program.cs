@@ -40,7 +40,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddScoped<IProfileService, ProfileService>();
-
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 // Register PostgreSQL EF Core DbContext
 builder.Services.AddNpgsql<ApplicationDbContext>(connectionString);
