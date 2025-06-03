@@ -9,17 +9,17 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = $"Host={Env.GetString("DB_HOST")};Port={Env.GetString("DB_PORT")};Database={Env.GetString("DB_NAME")};Username={Env.GetString("DB_USERNAME")};Password={Env.GetString("DB_PASSWORD")}";
-
-Console.WriteLine($"Connection string: {connectionString}");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 if (string.IsNullOrEmpty(connectionString))
 {
-    throw new Exception("Connection string is missing in configuration.");
+    throw new Exception("❌ Connection string is missing.");
 }
+
+Console.WriteLine($"🔌 Using connection string: {connectionString}");
+
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
