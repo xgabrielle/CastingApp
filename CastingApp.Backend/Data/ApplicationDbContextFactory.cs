@@ -9,16 +9,21 @@ namespace CastingApp.Backend.Data
     {
         public ApplicationDbContext CreateDbContext(string[] args)
         {
-            // Load configuration from appsettings.json
-            IConfigurationRoot configuration = new ConfigurationBuilder()
+            var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
+                .AddJsonFile("appsettings.Development.json", optional: true)
+                .AddUserSecrets<Program>() // 👈 Load user secrets
+                .AddEnvironmentVariables();
 
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            var configuration = builder.Build();
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-            optionsBuilder.UseNpgsql(connectionString); // or UseSqlServer if you're using SQL Server
+
+            if (string.IsNullOrEmpty(connectionString))
+                throw new Exception("❌ Connection string not found. Check User Secrets or appsettings.");
+
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            optionsBuilder.UseNpgsql(connectionString);
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }
