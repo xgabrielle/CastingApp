@@ -4,6 +4,6 @@ namespace CastingApp.Backend.Models;
 
 public class ApplicationUser : IdentityUser
 {
-    public string Name { get; set; }
-    public string ProfileImageUrl { get; set; }
+    public string? ProfileName { get; set; }
+    public string? ProfileImageUrl { get; set; }
 }

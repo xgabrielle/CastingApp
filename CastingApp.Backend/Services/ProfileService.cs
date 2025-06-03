@@ -24,7 +24,7 @@ public class ProfileService : IProfileService
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null) return false;
 
-        user.Name = dto.Name;
+        user.ProfileName = dto.Name;
         user.ProfileImageUrl = dto.ProfileImageUrl;
         user.Email = dto.Email;
 
