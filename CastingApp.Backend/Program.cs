@@ -15,10 +15,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 if (string.IsNullOrEmpty(connectionString))
 {
-    throw new Exception("❌ Connection string is missing.");
+    throw new Exception("Connection string is missing.");
 }
 
-Console.WriteLine($"🔌 Using connection string: {connectionString}");
 
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
