@@ -1,18 +1,16 @@
+using System.Text;
 using Microsoft.Extensions.Configuration;
 using CastingApp.Backend.Data;
+using CastingApp.Backend.Services;
 using Microsoft.EntityFrameworkCore;
+using CastingApp.Backend.Models;
 using DotNetEnv;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 
 Env.Load();
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.AddAuthentication();
-
 
 var connectionString = $"Host={Env.GetString("DB_HOST")};Port={Env.GetString("DB_PORT")};Database={Env.GetString("DB_NAME")};Username={Env.GetString("DB_USERNAME")};Password={Env.GetString("DB_PASSWORD")}";
 
@@ -22,6 +20,28 @@ if (string.IsNullOrEmpty(connectionString))
 {
     throw new Exception("Connection string is missing in configuration.");
 }
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => {
+        options.TokenValidationParameters = new TokenValidationParameters {
+            // Setup token validation
+            
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
+
+builder.Services.AddScoped<IProfileService, ProfileService>();
+
 
 // Register PostgreSQL EF Core DbContext
 builder.Services.AddNpgsql<ApplicationDbContext>(connectionString);
@@ -45,6 +65,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Map controller endpoints
 app.MapControllers();
