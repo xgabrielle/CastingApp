@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using CastingApp.Backend.DTO;
+using CastingApp.Backend.Models;
 
 
 namespace CastingApp.Backend.Controllers;
@@ -8,9 +9,9 @@ namespace CastingApp.Backend.Controllers;
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public AuthController(UserManager<IdentityUser> userManager)
+    public AuthController(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
     }
@@ -18,7 +19,7 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto model)
     {
-        var user = new IdentityUser { UserName = model.Username, Email = model.Email, };
+        var user = new ApplicationUser { UserName = model.Username, Email = model.Email, };
         var result = await _userManager.CreateAsync(user, model.Password);
 
         if (result.Succeeded)
