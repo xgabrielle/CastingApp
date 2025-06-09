@@ -3,7 +3,7 @@ import { loginUser} from '../api/auth';
 
 function LoginForm() 
 {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     
@@ -12,7 +12,7 @@ function LoginForm()
         setError('');
         try 
         {
-            const res = await loginUser({ email, password});
+            const res = await loginUser({ username, password});
             localStorage.setItem('token', res.data.token);
             alert('Login Successful');
         } catch (err)
@@ -26,10 +26,10 @@ function LoginForm()
             <h2>Login</h2>
             {error && <p style={{color: 'red'}}>{error}</p>}
             <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
+                type="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
                 required
             />
             <br />

@@ -4,7 +4,7 @@ import { registerUser } from '../api/auth';
 function RegisterForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
 
@@ -12,10 +12,18 @@ function RegisterForm() {
         e.preventDefault();
         setError('');
         try {
-            await registerUser({email, password, name});
+            await registerUser({username, email, password});
             setSuccess(true);
         } catch (err) {
-            setError(err.response?.data || 'Registration failed');
+            console.error("Register error:", err.response?.data);
+            if (err.response?.data?.errors) {
+                // Flatten and join validation messages
+                const messages = Object.values(err.response.data.errors).flat().join(' ');
+                setError(messages);
+            } else {
+                setError(err.response?.data?.title || 'Registration failed');
+            }
+
         }
     };
 
@@ -26,9 +34,9 @@ function RegisterForm() {
             {success && <p style={{color: 'green'}}>Registration successful!</p>}
             <input
                 type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Name"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
                 required
             />
             <br/>
