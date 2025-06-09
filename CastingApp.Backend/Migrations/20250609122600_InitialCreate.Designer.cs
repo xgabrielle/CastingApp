@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CastingApp.Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250603135439_RemoveUsernameFromApplicationUser")]
-    partial class RemoveUsernameFromApplicationUser
+    [Migration("20250609122600_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,7 +68,9 @@ namespace CastingApp.Backend.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("ProfileImageUrl")
-                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProfileName")
                         .HasColumnType("text");
 
                     b.Property<string>("SecurityStamp")
@@ -78,7 +80,6 @@ namespace CastingApp.Backend.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
@@ -96,8 +97,8 @@ namespace CastingApp.Backend.Migrations
 
             modelBuilder.Entity("CastingApp.Backend.Models.Profile", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
 
                     b.Property<string>("Location")
                         .HasColumnType("text");
@@ -111,31 +112,6 @@ namespace CastingApp.Backend.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Profiles");
-                });
-
-            modelBuilder.Entity("CastingApp.Backend.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -272,7 +248,7 @@ namespace CastingApp.Backend.Migrations
 
             modelBuilder.Entity("CastingApp.Backend.Models.Profile", b =>
                 {
-                    b.HasOne("CastingApp.Backend.Models.User", "User")
+                    b.HasOne("CastingApp.Backend.Models.ApplicationUser", "User")
                         .WithOne("Profile")
                         .HasForeignKey("CastingApp.Backend.Models.Profile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -332,7 +308,7 @@ namespace CastingApp.Backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CastingApp.Backend.Models.User", b =>
+            modelBuilder.Entity("CastingApp.Backend.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Profile");
                 });
