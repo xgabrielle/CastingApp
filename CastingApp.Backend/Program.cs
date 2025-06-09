@@ -45,10 +45,17 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 // Register PostgreSQL EF Core DbContext
 builder.Services.AddNpgsql<ApplicationDbContext>(connectionString);
 
-Console.WriteLine($"🔐 Final connection string: {connectionString}");
-
 // Register controllers
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy => policy.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 
 // Swagger (OpenAPI)
 builder.Services.AddEndpointsApiExplorer();
@@ -70,7 +77,7 @@ app.UseAuthorization();
 
 // Map controller endpoints
 app.MapControllers();
-
+app.UseCors("AllowFrontend");
 app.Run();
 
 
