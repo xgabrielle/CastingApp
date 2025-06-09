@@ -6,4 +6,5 @@ public class ApplicationUser : IdentityUser
 {
     public string? ProfileName { get; set; }
     public string? ProfileImageUrl { get; set; }
+    public Profile? Profile { get; set; }
 }

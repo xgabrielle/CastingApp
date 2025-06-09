@@ -14,7 +14,7 @@ namespace CastingApp.Backend.Controllers;
 public class ProfileController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
-    private UserManager<ApplicationUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     
     public ProfileController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
@@ -35,7 +35,6 @@ public class ProfileController : ControllerBase
         
         // Find the Profile entity for the current user
         var profile = await _context.Profiles
-            .Include(p => p.User)
             .FirstOrDefaultAsync(p => p.UserId.ToString() == user.Id);
 
         if (profile == null)
