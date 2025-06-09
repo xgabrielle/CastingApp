@@ -6,11 +6,11 @@ namespace CastingApp.Backend.Models;
 public class Profile
 {
     [Key]
-    public int UserId { get; set; }
+    public string UserId { get; set; }
     public string? ProfileName { get; set; }
     public string? ProfileImageUrl { get; set; }
     public string? Location { get; set; }
-    
+
     [ForeignKey("UserId")]
-    public User? User { get; set; }
+    public ApplicationUser User { get; set; }
 }
