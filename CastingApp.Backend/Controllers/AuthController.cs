@@ -25,31 +25,35 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto model)
     {
-        var user = new ApplicationUser { UserName = model.Username, Email = model.Email, };
-        var result = await _userManager.CreateAsync(user, model.Password);
-
-        if (result.Succeeded)
+        try
         {
-            Console.WriteLine("User Created");
-            var profile = new Profile
+            var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
             {
-                UserId = user.Id,
-                ProfileName = model.Username,
-                Location = "Not specified",
-                ProfileImageUrl = null
-            };
+                var profile = new Profile
+                {
+                    UserId = user.Id,
+                    ProfileName = model.Username,
+                    Location = "Not specified",
+                    ProfileImageUrl = null
+                };
 
-            _context.Profiles.Add(profile);
-            await _context.SaveChangesAsync();
-            return Ok("User Created");
+                _context.Profiles.Add(profile);
+                await _context.SaveChangesAsync();
+                
+                return Ok(new { message = "User and profile created successfully", userId = user.Id });
+            }
+            else
+            {
+                return BadRequest(new { errors = result.Errors });
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Console.WriteLine("Bad Request");
-            return BadRequest(result.Errors);
+            return StatusCode(500, new { error = "An error occurred during registration", details = ex.Message });
         }
-        
-       
     }
     
     [HttpPost("login")]
@@ -61,7 +65,7 @@ public class AuthController : ControllerBase
             var token = _tokenService.CreateToken(user);
             return Ok(new { token });
         }
-
+        
         return Unauthorized("Invalid credentials");
     }
 }
