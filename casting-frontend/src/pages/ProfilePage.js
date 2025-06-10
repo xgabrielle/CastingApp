@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import ProfileView from '../components/ProfileView'
 import ProfileEditForm from '../components/ProfileEditForm'
-import axios from 'axios'
+import API from '../api/axios'
 
 function ProfilePage()
 {
@@ -10,22 +10,24 @@ function ProfilePage()
 
     useEffect(() => {
         const fetchProfile = async () => {
-            const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:5049/api/profile', {
-                headers: {Authorization: `Bearer ${token}`},
-            });
-            setUser(res.data);
+            try {
+                const res = await API.get('/profile');
+                setUser(res.data);
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            }
         };
         fetchProfile();
     }, []);
     
     const handleSave = async (updatedUser) => {
-        const token = localStorage.getItem('token');
-        const res = await axios.put('http://localhost:5000/api/profile', updatedUser, {
-            headers: {Authorization: `Bearer ${token}`},
-        });
-        setUser(res.data);
-        setEditing(false);
+        try {
+            const res = await API.put('/profile', updatedUser);
+            setUser(res.data);
+            setEditing(false);
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
     };
     
     if (!user) return <p>Loading..</p>;
