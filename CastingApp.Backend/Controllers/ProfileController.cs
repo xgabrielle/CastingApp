@@ -1,6 +1,7 @@
 ﻿using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using CastingApp.Backend.Data;
+using CastingApp.Backend.DTO;
 using Microsoft.AspNetCore.Identity;
 using CastingApp.Backend.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -28,6 +29,7 @@ public class ProfileController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetProfile()
     {
         var user = await GetCurrentUser();
@@ -48,5 +50,33 @@ public class ProfileController : ControllerBase
             profile.ProfileImageUrl
         };
         return Ok(result);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateProfile([FromBody] ProfileUpdateDto updateDto)
+    {
+        var user = await GetCurrentUser();
+        if (user == null) return Unauthorized();
+
+        var profile = await _context.Profiles
+            .FirstOrDefaultAsync(p => p.UserId.ToString() == user.Id);
+
+        if (profile == null)
+        {
+            return NotFound("Profile not found.");
+        }
+
+        profile.ProfileName = updateDto.Name;
+        profile.ProfileImageUrl = updateDto.ProfileImageUrl;
+        profile.Location = updateDto.Location;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(new
+        {
+            profile.ProfileName,
+            profile.Location,
+            profile.ProfileImageUrl
+        });
     }
 }
