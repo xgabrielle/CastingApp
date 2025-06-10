@@ -4,7 +4,7 @@ using CastingApp.Backend.Data;
 using CastingApp.Backend.Services;
 using Microsoft.EntityFrameworkCore;
 using CastingApp.Backend.Models;
-using DotNetEnv;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -72,12 +72,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowFrontend");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Map controller endpoints
 app.MapControllers();
-app.UseCors("AllowFrontend");
 app.Run();
 
 
