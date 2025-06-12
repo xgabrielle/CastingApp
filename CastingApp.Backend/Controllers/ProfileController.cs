@@ -1,11 +1,11 @@
-﻿using System.Net.Mime;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using CastingApp.Backend.Data;
 using CastingApp.Backend.DTO;
 using Microsoft.AspNetCore.Identity;
 using CastingApp.Backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace CastingApp.Backend.Controllers;
 
@@ -25,19 +25,25 @@ public class ProfileController : ControllerBase
 
     private async Task<ApplicationUser> GetCurrentUser()
     {
-        return await _userManager.GetUserAsync(User);
-    }
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
+        if (string.IsNullOrEmpty(userId))
+        {
+            return null;
+        }
+
+        var user = await _userManager.FindByIdAsync(userId);
+        return user;
+    }
+    
     [HttpGet]
-    [AllowAnonymous]
     public async Task<IActionResult> GetProfile()
     {
         var user = await GetCurrentUser();
         if (user == null) return Unauthorized();
         
-        // Find the Profile entity for the current user
         var profile = await _context.Profiles
-            .FirstOrDefaultAsync(p => p.UserId.ToString() == user.Id);
+            .FirstOrDefaultAsync(p => p.UserId == user.Id);
 
         if (profile == null)
         {
@@ -59,7 +65,7 @@ public class ProfileController : ControllerBase
         if (user == null) return Unauthorized();
 
         var profile = await _context.Profiles
-            .FirstOrDefaultAsync(p => p.UserId.ToString() == user.Id);
+            .FirstOrDefaultAsync(p => p.UserId == user.Id);
 
         if (profile == null)
         {
