@@ -11,6 +11,8 @@ namespace CastingApp.Backend.Data
         
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<CastingAd> Ads { get; set; } 
+        public DbSet<AdSubmission> AdSubmission { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
