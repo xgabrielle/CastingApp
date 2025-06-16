@@ -1,4 +1,4 @@
-﻿namespace CastingApp.Backend.Data;
+﻿namespace CastingApp.Backend.DTO;
 
 public class CreateAdDto
 {

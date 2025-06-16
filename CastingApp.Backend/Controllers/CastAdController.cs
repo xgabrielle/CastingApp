@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CastingApp.Backend.Data;
+using CastingApp.Backend.DTO;
 using CastingApp.Backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
