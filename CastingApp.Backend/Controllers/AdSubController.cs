@@ -10,15 +10,15 @@ namespace CastingApp.Backend.Controllers;
 public class AdSubController : ControllerBase
 {
     readonly ApplicationDbContext _context;
-    AdSubController(ApplicationDbContext context)
+    public AdSubController(ApplicationDbContext context)
     {
         _context = context;
     }
-    [HttpPost("/api/ads/{adId}/submit")]
+    [HttpPost("ads/{adId}/submit")]
     [Authorize]
     public async Task<IActionResult> SubmitToAd(int adId, [FromForm] IFormFile videoFile)
     {
-        var userId = int.Parse(User.FindFirst("id").Value);
+        var userId = User.FindFirst("id").Value;
         var ad = await _context.Ads
             .Include(a => a.User)
             .FirstOrDefaultAsync(a => a.Id == adId);

@@ -9,7 +9,7 @@ public class AdSubmission
     public int AdId { get; set; }         
     public CastingAd Ad { get; set; }
 
-    public int UserId { get; set; }        
+    public string UserId { get; set; }        
     public ApplicationUser User { get; set; }
 
     public DateTime SubmittedAt { get; set; }

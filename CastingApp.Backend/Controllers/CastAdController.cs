@@ -22,10 +22,10 @@ public class CastAdController : ControllerBase
     [Authorize]
     public async Task<IActionResult> CreateAd([FromForm] CreateAdDto dto)
     {
-        var userId = int.Parse(User.FindFirst("id").Value);
+        var userId = User.FindFirst("id")!.Value;
 
         // Save PDF (e.g., to wwwroot/uploads)
-        var pdfPath = Path.Combine("wwwroot/uploads", Guid.NewGuid() + Path.GetExtension(dto.PdfFile.FileName));
+        var pdfPath = Path.Combine("wwwroot/Uploads", Guid.NewGuid() + Path.GetExtension(dto.PdfFile.FileName));
         using (var stream = System.IO.File.Create(pdfPath))
         {
             await dto.PdfFile.CopyToAsync(stream);
@@ -70,7 +70,7 @@ public class CastAdController : ControllerBase
     [Authorize]
     public async Task<IActionResult> UpdateAd(int id, [FromForm] CreateAdDto dto)
     {
-        var userId = int.Parse(User.FindFirst("id").Value);
+        var userId = User.FindFirst("id").Value;
         var ad = await _context.Ads.FindAsync(id);
 
         if (ad == null) return NotFound();
@@ -96,7 +96,7 @@ public class CastAdController : ControllerBase
     [Authorize]
     public async Task<IActionResult> DeleteAd(int id)
     {
-        var userId = int.Parse(User.FindFirst("id").Value);
+        var userId = User.FindFirst("id").Value;
         var ad = await _context.Ads.FindAsync(id);
 
         if (ad == null) return NotFound();
