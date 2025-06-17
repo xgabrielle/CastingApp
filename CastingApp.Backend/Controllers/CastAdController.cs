@@ -46,8 +46,16 @@ public class CastAdController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAds()
+    public async Task<IActionResult> GetAds([FromQuery] int? userId, [FromQuery] string? search)
     {
+        var query = _context.Ads.AsQueryable();
+
+        if (userId.HasValue)
+            query = query.Where(ad => ad.UserId == userId.Value.ToString());
+
+        if (!string.IsNullOrEmpty(search))
+            query = query.Where(ad =>
+                ad.AdTitle.Contains(search) || ad.Description.Contains(search));
         var ads = await _context.Ads
             .Include(a => a.User)
             .ToListAsync();
