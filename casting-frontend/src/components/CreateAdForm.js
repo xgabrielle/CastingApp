@@ -25,46 +25,27 @@ export default function CreateAdForm() {
     };
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-4 max-w-md mx-auto p-6 bg-white shadow rounded w-full"
-        >
-            <label className="flex flex-col text-sm font-medium w-full">
-                Title
-                <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="mt-1 p-2 border rounded w-full"
-                    placeholder="Enter ad title"
-                />
-            </label>
-
-            <label className="flex flex-col text-sm font-medium w-full">
-                Description
-                <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    className="mt-1 p-2 border rounded w-full resize-vertical"
-                    placeholder="Enter ad description"
-                    rows="4"
-                />
-            </label>
-
-            <label className="flex flex-col text-sm font-medium w-full">
-                Upload PDF
-                <input
-                    type="filen"
-                    accept=".pdf"
-                    onChange={(e) => setPdfFile(e.target.files[0])}
-                    className="mt-1 w-full"
-                />
-            </label>
-
-            <button
-                type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded w-full"
-            >
+        <form onSubmit={handleSubmit} className="space-y-4 p-4 max-w-md mx-auto">
+            <input
+                type="text"
+                placeholder="Ad Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="border p-2 w-full"
+            />
+            <textarea
+                placeholder="Ad Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="border p-2 w-full"
+            />
+            <input
+                type="file"
+                accept=".pdf"
+                onChange={(e) => setPdfFile(e.target.files[0])}
+                className="block"
+            />
+            <button type="submit" className="bg-blue-500 text-white p-2 rounded">
                 Create Ad
             </button>
         </form>
