@@ -33,6 +33,7 @@ public class CastAdController : ControllerBase
 
         var ad = new CastingAd()
         {
+            AdTitle = dto.AdTitle,
             Description = dto.Description,
             PdfUrl = pdfPath,
             UploadDate = DateTime.UtcNow,
@@ -84,6 +85,7 @@ public class CastAdController : ControllerBase
         if (ad == null) return NotFound();
         if (ad.UserId != userId) return Forbid();
 
+        ad.AdTitle = dto.AdTitle;
         ad.Description = dto.Description;
 
         if (dto.PdfFile != null)
