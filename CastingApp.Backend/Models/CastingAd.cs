@@ -14,6 +14,8 @@ public class CastingAd
     public string? AdTitle { get; set; }
 
     public DateTime UploadDate { get; set; }
+    
+    public string? UserName { get; set; }
 
     public ApplicationUser User { get; set; }
 }

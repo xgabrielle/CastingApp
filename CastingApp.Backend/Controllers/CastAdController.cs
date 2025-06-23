@@ -30,14 +30,18 @@ public class CastAdController : ControllerBase
         {
             await dto.PdfFile.CopyToAsync(stream);
         }
-
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null)
+            return BadRequest("User not found");
+        
         var ad = new CastingAd()
         {
             AdTitle = dto.AdTitle,
             Description = dto.Description,
             PdfUrl = pdfPath,
             UploadDate = DateTime.UtcNow,
-            UserId = userId
+            UserId = userId,
+            UserName = user.UserName
         };
 
         _context.Ads.Add(ad);
