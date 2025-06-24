@@ -54,6 +54,7 @@ public class ProfileController : ControllerBase
             profile.ProfileName,
             profile.Location,
             profile.ProfileImageUrl
+            // Roles
         };
         return Ok(result);
     }
@@ -75,6 +76,11 @@ public class ProfileController : ControllerBase
         profile.ProfileName = updateDto.Name;
         profile.ProfileImageUrl = updateDto.ProfileImageUrl;
         profile.Location = updateDto.Location;
+        profile.Email = updateDto.Email;
+        // Roles
+
+        user.ProfileName = profile.ProfileName;
+        user.Email = profile.Email;
 
         await _context.SaveChangesAsync();
 
@@ -82,7 +88,9 @@ public class ProfileController : ControllerBase
         {
             profile.ProfileName,
             profile.Location,
-            profile.ProfileImageUrl
+            profile.ProfileImageUrl,
+            profile.Email
+            // Roles
         });
     }
 }
