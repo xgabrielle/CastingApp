@@ -5,5 +5,5 @@ export const loginUser = async (credentials) => {
 };
 
 export const registerUser = async (userInfo) => {
-    return API.post('./auth/register', userInfo);
+    return API.post('/auth/register', userInfo);
 };
