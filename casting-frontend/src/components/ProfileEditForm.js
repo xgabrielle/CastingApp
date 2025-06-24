@@ -2,8 +2,8 @@
 
 function ProfileEditForm({ user, onSave})
 {
-    const [name, setName] = useState(user.name);
-    const [email, setEmail] = useState(user.email);
+    const [name, setName] = useState(user?.name || '');
+    const [email, setEmail] = useState(user?.email || '');
     
     const handleSubmit = (e) => {
         e.preventDefault();
