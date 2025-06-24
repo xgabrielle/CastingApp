@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { registerUser } from '../api/auth';
+import { registerUser, loginUser } from '../api/auth';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterForm() {
     const [email, setEmail] = useState('');
@@ -7,13 +8,19 @@ function RegisterForm() {
     const [username, setUsername] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
         setError('');
         try {
             await registerUser({username, email, password});
+            // Auto-login after registration
+            const res = await loginUser({ username, password });
+            localStorage.setItem('token', res.data.token);
             setSuccess(true);
+            // Redirect to profile page
+            navigate('/profile');
         } catch (err) {
             console.error("Register error:", err.response?.data);
             if (err.response?.data?.errors) {
@@ -23,7 +30,6 @@ function RegisterForm() {
             } else {
                 setError(err.response?.data?.title || 'Registration failed');
             }
-
         }
     };
 
