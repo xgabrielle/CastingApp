@@ -4,10 +4,11 @@ function ProfileEditForm({ user, onSave})
 {
     const [name, setName] = useState(user?.name || '');
     const [email, setEmail] = useState(user?.email || '');
+    const [location, setLocation] = useState(user?.location || '');
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave({ name, email });
+        onSave({ name, email, location });
     };
     
     return (
@@ -26,6 +27,13 @@ function ProfileEditForm({ user, onSave})
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="Email"
+            />
+            <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                required
+                placeholder="Location"
             />
             <button type="submit">Save Changes</button>
         </form>
