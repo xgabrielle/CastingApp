@@ -5,10 +5,11 @@ function ProfileEditForm({ user, onSave})
     const [name, setName] = useState(user?.name || '');
     const [email, setEmail] = useState(user?.email || '');
     const [location, setLocation] = useState(user?.location || '');
+    const [profileImageUrl, setProfileImageUrl] = useState(user?.profileImageUrl || '');
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave({ name, email, location });
+        onSave({ name, email, location, profileImageUrl });
     };
     
     return (
@@ -18,22 +19,30 @@ function ProfileEditForm({ user, onSave})
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                required
+                
                 placeholder="Name"
             />
             <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
+                
                 placeholder="Email"
             />
             <input
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                required
+                
                 placeholder="Location"
+            />
+            <input
+                type="file"
+                accept="image/jpeg, image/jpg"
+                value={profileImageUrl}
+                onChange={(e) => setProfileImageUrl(e.target.value)}
+                
+                placeholder="Profile Image"
             />
             <button type="submit">Save Changes</button>
         </form>
