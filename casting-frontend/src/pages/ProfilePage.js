@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import ProfileView from '../components/ProfileView'
 import ProfileEditForm from '../components/ProfileEditForm'
 import API from '../api/axios'
+import {Routes, Route, useNavigate } from 'react-router-dom';
 
 function ProfilePage()
 {
     const [user, setUser] = useState(null);
-    const [editing, setEditing] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -19,12 +20,12 @@ function ProfilePage()
         };
         fetchProfile();
     }, []);
-    
+
     const handleSave = async (updatedUser) => {
         try {
             const res = await API.put('/profile', updatedUser);
             setUser(res.data);
-            setEditing(false);
+            navigate('/profile');
         } catch (error) {
             console.error('Error updating profile:', error);
         }
@@ -34,14 +35,10 @@ function ProfilePage()
     
     return (
         <div>
-            {editing ? (
-                <ProfileEditForm user={user} onSave={handleSave} />
-            ) : (
-                <>
-                <ProfileView user={user} />
-                <button onClick={() => setEditing(true)}>Edit Profile</button>
-                </>
-            )}
+            <Routes>
+                <Route index element={<ProfileView user={user}/>}/>
+                <Route path="edit" element={<ProfileEditForm user={user} onSave={handleSave}/>}/>
+            </Routes>
         </div>
     );
 }

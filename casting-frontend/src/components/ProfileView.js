@@ -1,4 +1,5 @@
-﻿function ProfileView({ user })
+﻿import {Link} from 'react-router-dom';
+function ProfileView({ user })
 {
     return(
         <div>
@@ -11,6 +12,9 @@
             <p><strong>Name:</strong> {user.name}</p>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Location:</strong> {user.location}</p>
+            <Link to="edit">
+                <button>Edit Profile</button>
+            </Link>
         </div>
     );
 }
