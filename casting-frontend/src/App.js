@@ -19,7 +19,7 @@ function App() {
           <Routes>
               <Route path="/" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/profile/*" element={<ProfilePage />} />
               <Route path="/create" element={<CreateAdPage />} />
               <Route path="/adList" element={<AdListPage />} />
           </Routes>
