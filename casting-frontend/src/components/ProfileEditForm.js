@@ -1,7 +1,9 @@
-﻿import { useState } from 'react'
+﻿import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function ProfileEditForm({ user, onSave})
 {
+    const navigate = useNavigate();
     const [name, setName] = useState(user?.name || '');
     const [email, setEmail] = useState(user?.email || '');
     const [location, setLocation] = useState(user?.location || '');
@@ -10,6 +12,7 @@ function ProfileEditForm({ user, onSave})
     const handleSubmit = (e) => {
         e.preventDefault();
         onSave({ name, email, location, profileImageUrl });
+        navigate('api/Profile');
     };
     
     return (
