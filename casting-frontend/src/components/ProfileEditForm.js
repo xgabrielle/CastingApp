@@ -42,9 +42,7 @@ function ProfileEditForm({ user, onSave})
             <input
                 type="file"
                 accept="image/jpeg, image/jpg"
-                value={profileImageUrl}
                 onChange={(e) => setProfileImageUrl(e.target.value)}
-                
                 placeholder="Profile Image"
             />
             <button type="submit">Save Changes</button>
