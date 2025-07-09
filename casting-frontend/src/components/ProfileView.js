@@ -9,7 +9,7 @@ function ProfileView({ user })
                 alt={"Profile"}
                 style={{borderRadius: "50%", width: "100px", height: "100px"}}
             />
-            <p><strong>Name:</strong> {user.name}</p>
+            <p><strong>Name:</strong> {user.profileName}</p>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Location:</strong> {user.location}</p>
             <Link to="edit">

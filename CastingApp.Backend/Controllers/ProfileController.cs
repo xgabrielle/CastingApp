@@ -73,7 +73,7 @@ public class ProfileController : ControllerBase
             return NotFound("Profile not found.");
         }
 
-        profile.ProfileName = updateDto.Name;
+        profile.ProfileName = updateDto.ProfileName;
         profile.ProfileImageUrl = updateDto.ProfileImageUrl;
         profile.Location = updateDto.Location;
         profile.Email = updateDto.Email;
@@ -86,10 +86,10 @@ public class ProfileController : ControllerBase
 
         return Ok(new
         {
-            profile.ProfileName,
-            profile.Location,
-            profile.ProfileImageUrl,
-            profile.Email
+            profileName = profile.ProfileName,
+            location = profile.Location,
+            profileImageUrl = profile.ProfileImageUrl,
+            email = profile.Email
             // Roles
         });
     }
