@@ -11,7 +11,14 @@ function ProfileEditForm({ user, onSave})
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave({ profileName, email, location, profileImageUrl });
+        const formData = new FormData;
+        formData.append("profileName", profileName);
+        formData.append("email", email);
+        formData.append("location", location);
+        if (profileImageUrl){
+            formData.append("profileImageUrl", profileImageUrl)
+        }
+        onSave(formData);
         navigate('api/Profile');
     };
     
@@ -39,7 +46,7 @@ function ProfileEditForm({ user, onSave})
             <input
                 type="file"
                 accept="image/jpeg, image/jpg"
-                onChange={(e) => setProfileImageUrl(e.target.value)}
+                onChange={(e) => setProfileImageUrl(e.target.files[0])}
                 placeholder="Profile Image"
             />
             <button type="submit">Save Changes</button>
