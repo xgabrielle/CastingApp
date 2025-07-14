@@ -25,7 +25,6 @@ public class ProfileService : IProfileService
         if (user == null) return false;
 
         user.ProfileName = dto.ProfileName;
-        user.ProfileImageUrl = dto.ProfileImageUrl;
         user.Email = dto.Email;
 
         var result = await _userManager.UpdateAsync(user);

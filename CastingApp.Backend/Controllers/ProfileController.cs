@@ -60,13 +60,13 @@ public class ProfileController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateProfile([FromBody] ProfileUpdateDto updateDto)
+    public async Task<IActionResult> UpdateProfile([FromForm] ProfileUpdateDto updateDto)
     {
-        var user = await GetCurrentUser();
+        var user = await GetCurrentUser(); // get current logged in user
         if (user == null) return Unauthorized();
 
         var profile = await _context.Profiles
-            .FirstOrDefaultAsync(p => p.UserId == user.Id);
+            .FirstOrDefaultAsync(p => p.UserId == user.Id); // load the user's profile from the DB
 
         if (profile == null)
         {
@@ -74,14 +74,31 @@ public class ProfileController : ControllerBase
         }
 
         profile.ProfileName = updateDto.ProfileName;
-        profile.ProfileImageUrl = updateDto.ProfileImageUrl;
         profile.Location = updateDto.Location;
         profile.Email = updateDto.Email;
         // Roles
 
-        user.ProfileName = profile.ProfileName;
-        user.Email = profile.Email;
+        if (updateDto.ProfileImageUrl != null && updateDto.ProfileImageUrl.Length > 0)
+        {
+            // folder to save the files
+            var uploadImage = Path.Combine("wwwroot", "uploads", "images");
+            Directory.CreateDirectory(uploadImage);
 
+            var uniqueFileName = Guid.NewGuid().ToString() + "_" + updateDto.ProfileImageUrl.FileName;
+            var filePath = Path.Combine(uploadImage, uniqueFileName);
+            
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await updateDto.ProfileImageUrl.CopyToAsync(stream);
+            }
+            
+            profile.ProfileImageUrl = $"/uploads/{uniqueFileName}";
+
+        }
+        else
+        {
+            Console.WriteLine("Not able to upload image");
+        }
         await _context.SaveChangesAsync();
 
         return Ok(new
