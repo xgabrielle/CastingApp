@@ -92,7 +92,7 @@ public class ProfileController : ControllerBase
                 await updateDto.ProfileImageUrl.CopyToAsync(stream);
             }
             
-            profile.ProfileImageUrl = $"/uploads/{uniqueFileName}";
+            profile.ProfileImageUrl = $"/uploads/images/{uniqueFileName}";
 
         }
         else
