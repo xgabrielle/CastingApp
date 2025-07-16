@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
@@ -9,6 +9,7 @@ import {useState, useEffect} from 'react';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
     
     useEffect(() => {
         setIsLoggedIn(!!localStorage.getItem('token'));
@@ -21,6 +22,7 @@ function App() {
     const handleLogOut = () => {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
+        navigate('/');
     }
     
   return (
@@ -36,7 +38,10 @@ function App() {
                   <>
                     <Link to="/profile">Profile</Link> | {" "}
                     <Link to="/create">Create Casting Ad</Link> | {" "}
-                    <Link to="/adList">Ad List</Link>
+                    <Link to="/adList">Ad List</Link> | {" "}
+                      <button onClick={handleLogOut} style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}>
+                          Logout
+                      </button>
                   </>
                   )}
           </nav>
