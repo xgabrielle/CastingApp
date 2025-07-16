@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { loginUser} from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 
-function LoginForm() 
+function LoginForm( {onLogin} ) 
 {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -16,6 +16,7 @@ function LoginForm()
         {
             const res = await loginUser({ username, password});
             localStorage.setItem('token', res.data.token);
+            if (onLogin) onLogin();
             alert('Login Successful');
             navigate ('./adList')
         } catch (err)

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { registerUser, loginUser } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 
-function RegisterForm() {
+function RegisterForm( {onLogin} ) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
@@ -19,6 +19,7 @@ function RegisterForm() {
             const res = await loginUser({ username, password });
             localStorage.setItem('token', res.data.token);
             setSuccess(true);
+            if (onLogin) onLogin();
             // Redirect to profile page
             navigate('/profile');
         } catch (err) {

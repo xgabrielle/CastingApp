@@ -1,11 +1,11 @@
 import RegisterForm from '../components/RegisterForm';
 
-function RegisterPage()
+function RegisterPage( {onLogin} )
 {
     return (
         <div>
             <h1> Register Page</h1>
-            <RegisterForm />
+            <RegisterForm onLogin={onLogin} />
         </div>
     );
 }
