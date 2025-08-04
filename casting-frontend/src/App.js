@@ -4,6 +4,7 @@ import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import CreateAdPage from './pages/CreateAdPage';
 import AdListPage from './pages/AdListPage';
+import AdView from './components/AdView'
 import { Link } from 'react-router-dom';
 import {useState, useEffect} from 'react';
 
@@ -45,13 +46,18 @@ function App() {
                   </>
                   )}
           </nav>
+          {!isLoggedIn ? (
           <Routes>
               <Route path="/" element={<LoginPage onLogin={handleLogin}/>} />
               <Route path="/register" element={<RegisterPage onLogin={handleLogin} />} />
+          </Routes>
+              ) : (
+                  <Routes>
               <Route path="/profile/*" element={<ProfilePage />} />
               <Route path="/create" element={<CreateAdPage />} />
-              <Route path="/adList" element={<AdListPage />} />
+              <Route path="/adList/*" element={<AdListPage />} />
           </Routes>
+          )}
       </>
   );
 }
