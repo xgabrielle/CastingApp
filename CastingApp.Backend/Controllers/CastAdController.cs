@@ -25,7 +25,7 @@ public class CastAdController : ControllerBase
         var userId = User.FindFirst("id")!.Value;
 
         // Save PDF (e.g., to wwwroot/uploads)
-        var pdfPath = Path.Combine("wwwroot/Uploads", Guid.NewGuid() + Path.GetExtension(dto.PdfFile.FileName));
+        var pdfPath = Path.Combine("wwwroot/uploads", Guid.NewGuid() + Path.GetExtension(dto.PdfFile.FileName));
         using (var stream = System.IO.File.Create(pdfPath))
         {
             await dto.PdfFile.CopyToAsync(stream);
