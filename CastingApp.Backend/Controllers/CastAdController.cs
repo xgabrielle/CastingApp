@@ -48,6 +48,7 @@ public class CastAdController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok(ad);
+        
     }
     
     [HttpGet]
@@ -76,7 +77,12 @@ public class CastAdController : ControllerBase
 
         if (ad == null) return NotFound();
 
-        return Ok(ad);
+        return Ok(new GetAdDTO
+        {
+            Title = ad.AdTitle,
+            Description = ad.Description,
+            PdfFileUrl = $"/wwwroot/uploads/pdf/{Path.GetFileName(ad.PdfUrl)}"
+        });
     }
     
     [HttpPut("{id}")]
