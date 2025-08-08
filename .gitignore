@@ -414,10 +414,13 @@ yarn-error.log*
 #
 appsettings.json
 
-CastingApp.Backend/Properties/launchSettings.json
+
+/CastingApp.Backend/Properties/launchSettings.json
+/CastingApp.Backend/appsettings.Development.json
+/CastingApp.Backend/appsettings.json
 
 # Ignore uploaded files
 /CastingApp.Backend/wwwroot/uploads/
 
 
-/CastingApp.Backend/Properties/launchSettings.json
+#/CastingApp.Backend/
