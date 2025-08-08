@@ -1,5 +1,6 @@
 ﻿import { useEffect, useState } from 'react';
 import API from '../api/axios';
+import { Link } from 'react-router-dom';
 
 export default function AdsListPage() {
     const [ads, setAds] = useState([]);
@@ -96,10 +97,16 @@ export default function AdsListPage() {
                         }
                         return (
                             <div key={ad.id} className="bg-white shadow p-4 rounded">
-                                <h2 className="text-xl font-semibold">{ad.adTitle || "No Title"}</h2>
-                                <p className="text-gray-700">{ad.description || "No description provided."}</p>
-                                <p className="text-sm text-gray-500">Uploaded: {dateString}</p>
+                                <h2 className="text-xl font-semibold">
+                                    <Link to={`/adview/${ad.id}`}>{ad.adTitle || "No Title"}</Link>
+                                </h2>
+                                
+                                    
+                                {/*<p className="text-gray-700">{ad.description || "No description provided."}</p>*/}
+                                {/*<p className="text-sm text-gray-500">Uploaded: {dateString}</p>*/}
+                                
                             </div>
+                            
                         );
                     })
                 )}

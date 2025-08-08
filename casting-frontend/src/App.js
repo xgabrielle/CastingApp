@@ -56,6 +56,7 @@ function App() {
               <Route path="/profile/*" element={<ProfilePage />} />
               <Route path="/create" element={<CreateAdPage />} />
               <Route path="/adList/*" element={<AdListPage />} />
+                      <Route path=":id" element={<AdView />} />
           </Routes>
           )}
       </>
