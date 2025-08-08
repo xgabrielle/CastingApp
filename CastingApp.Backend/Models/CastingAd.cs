@@ -7,7 +7,7 @@ public class CastingAd
 
     public string? VideoUrl { get; set; }
 
-    public string? PdfUrl { protected get; set; }
+    public string? PdfUrl { get; set; }
 
     public string? UserId { get; set; }
     
