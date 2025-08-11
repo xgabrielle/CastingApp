@@ -83,7 +83,7 @@ public class CastAdController : ControllerBase
             UploadDate = ad.UploadDate,
             UserName = ad.UserName,
             PdfFileName = ad.PdfFileName,
-            PdfDownloadUrl = ad.PdfFile != null ? Url.Action(nameof(DownloadPdf)) : null
+            PdfDownloadUrl = ad.PdfFile != null ? Url.Action(nameof(DownloadPdf), new {id = ad.Id}) : null
         };
         return Ok(dto);
     }
