@@ -7,7 +7,8 @@ public class CastingAd
 
     public string? VideoUrl { get; set; }
 
-    public string? PdfUrl { get; set; }
+    public byte[]? PdfFile { get; set; }
+    public string? PdfFileName { get; set; }
 
     public string? UserId { get; set; }
     

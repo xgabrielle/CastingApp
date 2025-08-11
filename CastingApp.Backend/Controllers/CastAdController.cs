@@ -23,13 +23,6 @@ public class CastAdController : ControllerBase
     public async Task<IActionResult> CreateAd([FromForm] CreateAdDto dto)
     {
         var userId = User.FindFirst("id")!.Value;
-
-        // Save PDF (e.g., to wwwroot/uploads)
-        var pdfPath = Path.Combine("wwwroot/uploads", Guid.NewGuid() + Path.GetExtension(dto.PdfFile.FileName));
-        using (var stream = System.IO.File.Create(pdfPath))
-        {
-            await dto.PdfFile.CopyToAsync(stream);
-        }
         var user = await _context.Users.FindAsync(userId);
         if (user == null)
             return BadRequest("User not found");
@@ -38,16 +31,23 @@ public class CastAdController : ControllerBase
         {
             AdTitle = dto.AdTitle,
             Description = dto.Description,
-            PdfUrl = pdfPath,
             UploadDate = DateTime.UtcNow,
             UserId = userId,
             UserName = user.UserName
         };
 
+        if (dto.PdfFile != null)
+        {
+            using var ms = new MemoryStream();
+            await dto.PdfFile.CopyToAsync(ms);
+            ad.PdfFile = ms.ToArray();
+            ad.PdfFileName = dto.PdfFile.FileName;
+        }
+
         _context.Ads.Add(ad);
         await _context.SaveChangesAsync();
 
-        return Ok(ad);
+        return Ok(new {ad.Id});
         
     }
     
@@ -74,15 +74,18 @@ public class CastAdController : ControllerBase
         var ad = await _context.Ads
             .Include(a => a.User)
             .FirstOrDefaultAsync(a => a.Id == id);
-
         if (ad == null) return NotFound();
 
-        return Ok(new GetAdDTO
+        var dto = new GetAdDTO
         {
             Title = ad.AdTitle,
             Description = ad.Description,
-            PdfFileUrl = $"/wwwroot/uploads/pdf/{Path.GetFileName(ad.PdfUrl)}"
-        });
+            UploadDate = ad.UploadDate,
+            UserName = ad.UserName,
+            PdfFileName = ad.PdfFileName,
+            PdfDownloadUrl = ad.PdfFile != null ? Url.Action(nameof(DownloadPdf)) : null
+        };
+        return Ok(dto);
     }
     
     [HttpPut("{id}")]
@@ -100,12 +103,10 @@ public class CastAdController : ControllerBase
 
         if (dto.PdfFile != null)
         {
-            var newPath = Path.Combine("wwwroot/uploads", Guid.NewGuid() + Path.GetExtension(dto.PdfFile.FileName));
-            using (var stream = System.IO.File.Create(newPath))
-            {
-                await dto.PdfFile.CopyToAsync(stream);
-            }
-            ad.PdfUrl = newPath;
+            using var ms = new MemoryStream();
+            await dto.PdfFile.CopyToAsync(ms);
+            ad.PdfFile = ms.ToArray();
+            ad.PdfFileName = dto.PdfFile.FileName;
         }
 
         await _context.SaveChangesAsync();
@@ -127,6 +128,17 @@ public class CastAdController : ControllerBase
 
         return NoContent();
     }
+    
+    [HttpGet("{id}/pdf")]
+    public async Task<IActionResult> DownloadPdf(int id)
+    {
+        var ad = await _context.Ads.FindAsync(id);
+        if (ad == null || ad.PdfFile == null)
+            return NotFound();
+
+        return File(ad.PdfFile, "application/pdf", ad.PdfFileName);
+    }
+
 
 
 
