@@ -7,7 +7,7 @@ function AdView (){
     const [isLoading, setLoading] = useState(true);
     const [ad, setAd] = useState(null);
     const [error, setError] = useState(null);
-    
+
     useEffect(() => {
         const fetchAd = async () => {
             setLoading(true);
@@ -38,16 +38,20 @@ function AdView (){
             dateString = date.toLocaleDateString();
         }
     }
-
+    
     return (
         <div className="p-6 max-w-xl mx-auto bg-white shadow rounded">
             <h1 className="text-2xl font-bold mb-2">{ad.adTitle || 'No Title'}</h1>
             <p className="mb-2 text-gray-700">{ad.description || 'No description provided.'}</p>
             <p className="mb-2 text-gray-600">Created by: {ad.userName || 'Unknown'}</p>
             <p className="mb-2 text-gray-500">Uploaded: {dateString}</p>
-            {ad.pdfDownloadUrl && (
-                <a href={ad.pdfDownloadUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">View PDF</a>
-            )}
+            {ad.pdfDownloadUrl ? (
+                <a href={`http://localhost:5049${ad.pdfDownloadUrl}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">View PDF</a>
+            ) : (
+                <p className="text-red-500">No PDF available</p>
+                )
+            }
+            
         </div>
     );
 }
