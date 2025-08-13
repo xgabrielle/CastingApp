@@ -97,15 +97,15 @@ app.UseStaticFiles();
 var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
 Directory.CreateDirectory(uploadsPath);
 
+
+
+app.UseRouting();
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(uploadsPath),
     RequestPath = "/uploads"
 });
-
 app.UseCors("AllowFrontend");
-
-app.UseRouting();
 
 app.UseAuthentication(); // IMPORTANT: This must be before UseAuthorization
 app.UseAuthorization();  // IMPORTANT: This must be after UseAuthentication

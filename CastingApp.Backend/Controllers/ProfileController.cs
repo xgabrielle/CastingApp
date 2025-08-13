@@ -54,7 +54,7 @@ public class ProfileController : ControllerBase
             profile.ProfileName,
             profile.Location,
             profile.Email,
-            //profile.ProfileImageUrl,
+            profile.ProfileImageUrl,
             // Roles
         };
         return Ok(result);

@@ -5,7 +5,7 @@ function ProfileView({ user })
         <div>
             <h2>My Profile</h2>
             <img
-                src={user.profileImageUrl || "https://placehold.co/100x100"}
+                src={`http://localhost:5049${user.profileImageUrl}` || "https://placehold.co/100x100"}
                 alt={"Profile"}
                 style={{borderRadius: "50%", width: "100px", height: "100px"}}
             />
