@@ -37,7 +37,8 @@ public class AuthController : ControllerBase
                     UserId = user.Id,
                     ProfileName = model.Username,
                     Location = "Not specified",
-                    ProfileImageUrl = null
+                    ProfileImageUrl = null,
+                    Email = model.Email
                 };
 
                 _context.Profiles.Add(profile);
