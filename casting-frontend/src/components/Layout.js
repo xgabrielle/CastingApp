@@ -1,4 +1,6 @@
 ﻿import * as React from "react";
+
+import { Link } from "react-router-dom";
 import {
     AppBar,
     Toolbar,
@@ -15,12 +17,16 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import SettingsIcon from "@mui/icons-material/Settings";
+import PersonIcon from "@mui/icons-material/Person";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import LoginIcon from "@mui/icons-material/Login";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const drawerWidth = 240;
 
-export default function Layout({ title = "My App", children }) {
+export default function Layout({ title = "My App", isLoggedIn = false, onLogout, children }) {
     const [open, setOpen] = React.useState(true); // simple desktop toggle
 
     return (
@@ -51,18 +57,37 @@ export default function Layout({ title = "My App", children }) {
             >
                 <Toolbar />
                 <List>
-                    <ListItemButton>
-                        <ListItemIcon><HomeIcon /></ListItemIcon>
-                        <ListItemText primary="Home" />
-                    </ListItemButton>
-                    <ListItemButton>
-                        <ListItemIcon><DashboardIcon /></ListItemIcon>
-                        <ListItemText primary="Dashboard" />
-                    </ListItemButton>
-                    <ListItemButton>
-                        <ListItemIcon><SettingsIcon /></ListItemIcon>
-                        <ListItemText primary="Settings" />
-                    </ListItemButton>
+                    {!isLoggedIn ? (
+                        <>
+                            <ListItemButton component={Link} to="/">
+                                <ListItemIcon><LoginIcon /></ListItemIcon>
+                                <ListItemText primary="Login" />
+                            </ListItemButton>
+                            <ListItemButton component={Link} to="/register">
+                                <ListItemIcon><AppRegistrationIcon /></ListItemIcon>
+                                <ListItemText primary="Register" />
+                            </ListItemButton>
+                        </>
+                    ) : (
+                        <>
+                            <ListItemButton component={Link} to="/profile">
+                                <ListItemIcon><PersonIcon /></ListItemIcon>
+                                <ListItemText primary="Profile" />
+                            </ListItemButton>
+                            <ListItemButton component={Link} to="/create">
+                                <ListItemIcon><AddBoxIcon /></ListItemIcon>
+                                <ListItemText primary="Create Casting Ad" />
+                            </ListItemButton>
+                            <ListItemButton component={Link} to="/adList">
+                                <ListItemIcon><ListAltIcon /></ListItemIcon>
+                                <ListItemText primary="Ad List" />
+                            </ListItemButton>
+                            <ListItemButton onClick={onLogout}>
+                                <ListItemIcon><LogoutIcon /></ListItemIcon>
+                                <ListItemText primary="Logout" />
+                            </ListItemButton>
+                        </>
+                    )}
                 </List>
                 <Divider />
             </Drawer>

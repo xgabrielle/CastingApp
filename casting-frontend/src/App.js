@@ -31,40 +31,20 @@ function App() {
     }
     
   return (
-      <Layout title="Casting">
-          <>
-              <nav style={{ padding: "10px" }}>
-                  {!isLoggedIn ? (
-                      <>
-                        <Link to="/">Login</Link> |{" "}
-                        <Link to="/register">Register</Link>
-                      </>
-                      
+      <Layout title="Casting" isLoggedIn={isLoggedIn} onLogout={handleLogOut}>
+          {!isLoggedIn ? (
+          <Routes>
+              <Route path="/" element={<LoginPage onLogin={handleLogin}/>} />
+              <Route path="/register" element={<RegisterPage onLogin={handleLogin} />} />
+          </Routes>
               ) : (
-                      <>
-                        <Link to="/profile">Profile</Link> | {" "}
-                        <Link to="/create">Create Casting Ad</Link> | {" "}
-                        <Link to="/adList">Ad List</Link> | {" "}
-                          <button onClick={handleLogOut} style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}>
-                              Logout
-                          </button>
-                      </>
-                      )}
-              </nav>
-              {!isLoggedIn ? (
-              <Routes>
-                  <Route path="/" element={<LoginPage onLogin={handleLogin}/>} />
-                  <Route path="/register" element={<RegisterPage onLogin={handleLogin} />} />
-              </Routes>
-                  ) : (
-                      <Routes>
-                  <Route path="/profile/*" element={<ProfilePage />} />
-                  <Route path="/create" element={<CreateAdPage />} />
-                  <Route path="/adList/*" element={<AdListPage />} />
-                          <Route path="/adview/:id" element={<AdView />} />
-              </Routes>
-              )}
-          </>
+                  <Routes>
+              <Route path="/profile/*" element={<ProfilePage />} />
+              <Route path="/create" element={<CreateAdPage />} />
+              <Route path="/adList/*" element={<AdListPage />} />
+                      <Route path="/adview/:id" element={<AdView />} />
+          </Routes>
+          )}
       </Layout>
   );
 }
