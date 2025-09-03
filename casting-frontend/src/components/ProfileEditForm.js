@@ -1,5 +1,10 @@
 ﻿import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import {Button} from "@mui/material";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import {Typography} from "@mui/material";
 
 function ProfileEditForm({ user, onSave})
 {
@@ -23,34 +28,60 @@ function ProfileEditForm({ user, onSave})
     };
     
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Edit Profile</h2>
-            <input
+        <Box
+            component="form"
+            sx={{ '& .MuiTextField-root': { m: 0.5, width: '50ch' } }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit}>
+
+            <Typography variant="h4" gutterBottom>
+                Edit Profile
+            </Typography>
+            <TextField
                 type="text"
+                id="filled-disabled"
                 value={profileName}
                 onChange={(e) => setProfileName(e.target.value)}
                 placeholder="Name"
+                variant="filled"
             />
-            <input
+            <TextField
                 type="email"
+                id="filled-disabled"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
+                variant="filled"
             />
-            <input
+            <TextField
                 type="text"
+                id="filled-disabled"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="Location"
+                variant="filled"
             />
+            <Button
+                variant="contained"
+                component="label"
+                startIcon={<PhotoCameraIcon/>}
+            >
+                Upload Photo
             <input
                 type="file"
+                hidden
                 accept="image/jpeg, image/jpg"
                 onChange={(e) => setProfileImageUrl(e.target.files[0])}
                 placeholder="Profile Image"
             />
-            <button type="submit">Save Changes</button>
-        </form>
+            </Button>
+            <Button 
+                type="submit"
+                variant="contained"
+                color="success"
+            >Save Changes</Button>
+        </Box>
     );
 }
 
