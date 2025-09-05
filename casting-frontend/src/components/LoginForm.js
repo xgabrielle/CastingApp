@@ -1,17 +1,27 @@
 import { useState } from 'react';
 import { loginUser} from '../api/auth';
 import { useNavigate } from 'react-router-dom';
+import {TextField, Button, Box, Typography} from "@mui/material";
 
 function LoginForm( {onLogin} ) 
 {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState({username: '', password:''});
+    const [loginError, setLoginError] = useState('');
     const navigate = useNavigate();
     
     const handleLogin = async (e) => {
         e.preventDefault();
-        setError('');
+        let newErrors = {username:'', password:''};
+        let hasError = false;
+
+        if (!username.trim()){
+            newErrors.username = "Username is required"
+            hasError = true;
+        }
+        setError(newErrors)
+        if (hasError) return;
         try 
         {
             const res = await loginUser({ username, password});
@@ -21,32 +31,48 @@ function LoginForm( {onLogin} )
             navigate ('./adList')
         } catch (err)
         {
-            setError(err.response?.data || 'Login Failed');   
+            setError({
+                username: "Incorrect username or password",
+                password: "Incorrect username or password",
+            });
+            setLoginError(err.response?.data?.message || "Login Failed");
         }
     };
     
     return (
-        <form onSubmit={handleLogin}>
-            <h2>Login</h2>
-            {error && <p style={{color: 'red'}}>{error}</p>}
-            <input
+        <Box
+            component="form"
+            color="grey"
+            sx={{ '& .MuiTextField-root': { m: 1.5, width: '30ch' } }}
+            onSubmit={handleLogin}>
+            
+            <Typography variant="h5">
+                Login
+            </Typography>
+            <TextField
                 type="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username"
+                variant="standard"
                 required
+                error={Boolean(error.username)}
+                helperText={error.username}
             />
             <br />
-            <input
+            <TextField
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
+                variant="standard"
                 required
+                error={Boolean(error.password)}
+                helperText={error.password}
             />
             <br />
-            <button type="submit">Login</button>
-        </form>
+            <Button type="submit">Login</Button>
+        </Box>
     );
 }
 
