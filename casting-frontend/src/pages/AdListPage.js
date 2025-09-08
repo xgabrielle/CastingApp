@@ -126,7 +126,7 @@ export default function AdsListPage() {
             <Typography variant="h5"
                         color="grey"
                         sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}>
-                All Ads
+                Ad List
             </Typography>
             <br/>
             <Typography variant="body2"
