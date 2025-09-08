@@ -1,12 +1,30 @@
-﻿import { useEffect, useState } from 'react';
+﻿import { useEffect, useMemo, useState } from 'react';
 import API from '../api/axios';
 import { Link } from 'react-router-dom';
+import {Avatar, Box, ListItem, ListItemAvatar, List, ListItemText, Typography, TextField, Button} from "@mui/material";
+import FolderIcon from '@mui/icons-material/Folder';
 
 export default function AdsListPage() {
     const [ads, setAds] = useState([]);
-    const [search, setSearch] = useState("");
+    const [searchInput, setSearchInput] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const visibleAds = useMemo(() => {
+        if (!searchInput.trim()) {
+            return ads;
+        }
+        const query = searchInput.trim().toLowerCase();
+        const scoreTitle = (title) => {
+            const t = (title || '').toLowerCase();
+            const idx = t.indexOf(query);
+            if (idx === -1) return Number.POSITIVE_INFINITY; // filtered out later
+            return idx + Math.abs(t.length - query.length) * 0.01;
+        };
+        return ads
+            .filter(a => (a?.adTitle || '').toLowerCase().includes(query))
+            .sort((a, b) => scoreTitle(a?.adTitle) - scoreTitle(b?.adTitle));
+    }, [ads, searchInput]);
 
     useEffect(() => {
         const fetchAds = async () => {
@@ -14,7 +32,7 @@ export default function AdsListPage() {
             setError(null);
             try {
                 const response = await API.get('/castad', {
-                    params: { search: search || undefined }
+                    params: { search: undefined }
                 });
                 console.log('API Response:', response.data); // Debug log
                 
@@ -48,7 +66,39 @@ export default function AdsListPage() {
         };
 
         fetchAds();
-    }, [search]);
+    }, []);
+
+    const handleSearch = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await API.get('/castad', {
+                params: { search: searchInput || undefined }
+            });
+            let adsData = response.data;
+            if (response.data && response.data.$values && Array.isArray(response.data.$values)) {
+                adsData = response.data.$values;
+            }
+            if (Array.isArray(adsData)) {
+                setAds(adsData);
+            } else {
+                setAds([]);
+                setError('Invalid data format received from server');
+            }
+        } catch (error) {
+            console.error('Failed to fetch ads:', error);
+            setAds([]);
+            if (error.response?.status === 404) {
+                setError('API endpoint not found. Please check if the backend is running.');
+            } else if (error.response?.status === 401) {
+                setError('Please log in to view ads.');
+            } else {
+                setError('Failed to fetch ads: ' + (error.response?.data || error.message));
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     if (loading) {
         return (
@@ -73,20 +123,36 @@ export default function AdsListPage() {
 
     return (
         <div className="p-6 max-w-6xl mx-auto">
-            <h1 className="text-2xl font-bold mb-4">All Ads</h1>
-            <p className="mb-2 text-gray-600">{ads.length} ads found</p>
-            <input
+            <Typography variant="h5"
+                        color="grey"
+                        sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}>
+                All Ads
+            </Typography>
+            <br/>
+            <Typography variant="body2"
+                        color="grey"
+                        sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}>
+                Number of ads: {searchInput.trim() ? visibleAds.length : ads.length}
+            </Typography>
+            <br/>
+            <TextField
                 type="text"
                 placeholder="Search ads..."
                 className="mb-4 p-2 border rounded w-full"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                value={searchInput}
+                variant="standard"
+                onChange={(e) => setSearchInput(e.target.value)}
             />
+            <Button onClick={handleSearch}
+                    variant="outlined"
+                    sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}>
+                Search
+            </Button>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {ads.length === 0 ? (
+                {(searchInput.trim() ? visibleAds.length === 0 : ads.length === 0) ? (
                     <p className="col-span-full text-center text-gray-500">No ads found.</p>
                 ) : (
-                    ads.map((ad) => {
+                    (searchInput.trim() ? visibleAds : ads).map((ad) => {
                         // Check for valid date
                         let dateString = "Unknown";
                         if (ad.uploadDate) {
@@ -96,24 +162,27 @@ export default function AdsListPage() {
                             }
                         }
                         return (
-                            <div key={ad.id} className="bg-white shadow p-4 rounded">
-                                <h2 className="text-xl font-semibold">
-                                    <Link to={`/adview/${ad.id}`}>{ad.adTitle || "No Title"}</Link>
-                                </h2>
+                            <Box key={ad.id} className="bg-white shadow p-4 rounded">
+                                <List>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <FolderIcon/>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                        primary={<Link to={`/adview/${ad.id}`}>{ad.adTitle || "No Title"}</Link>}
+                                        secondary={dateString}
+                                        >
+                                        </ListItemText>
+                                    </ListItem>
+                                </List>
                                 
-                                    
-                                {/*<p className="text-gray-700">{ad.description || "No description provided."}</p>*/}
-                                {/*<p className="text-sm text-gray-500">Uploaded: {dateString}</p>*/}
-                                
-                            </div>
-                            
+                            </Box>
                         );
                     })
                 )}
             </div>
-            <button type="search" className="bg-blue-500 text-white p-2 rounded">
-                Search Ad
-            </button>
         </div>
     );
 }
