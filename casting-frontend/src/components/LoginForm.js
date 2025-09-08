@@ -20,6 +20,10 @@ function LoginForm( {onLogin} )
             newErrors.username = "Username is required"
             hasError = true;
         }
+        if (!password.trim()){
+            newErrors.password = "Password is required"
+            hasError = true;
+        }
         setError(newErrors)
         if (hasError) return;
         try 
@@ -49,13 +53,13 @@ function LoginForm( {onLogin} )
             <Typography variant="h5">
                 Login
             </Typography>
+            <br/>
             <TextField
                 type="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username"
                 variant="standard"
-                required
                 error={Boolean(error.username)}
                 helperText={error.username}
             />
@@ -66,7 +70,6 @@ function LoginForm( {onLogin} )
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 variant="standard"
-                required
                 error={Boolean(error.password)}
                 helperText={error.password}
             />
