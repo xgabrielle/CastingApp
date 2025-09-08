@@ -67,8 +67,10 @@ function RegisterForm( {onLogin} ) {
             color="grey"
             sx={{ '& .MuiTextField-root': { m: 1.5, width: '30ch' } }}
             onSubmit={handleRegister}>
-            <Typography variant="h5">
-                Register
+            <Typography variant="h5"
+                        sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}
+            >
+                Create a new user
             </Typography>
             <br/>
             {success && <p style={{color: 'green'}}>Registration successful!</p>}
@@ -102,7 +104,9 @@ function RegisterForm( {onLogin} ) {
                 helperText={error.password}
             />
             <br/>
-            <Button type="submit">Register</Button>
+            <Button type="submit"
+                    sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}
+            >Register</Button>
         </Box>
     );
 }

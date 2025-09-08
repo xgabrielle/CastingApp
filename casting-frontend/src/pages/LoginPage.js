@@ -1,11 +1,20 @@
 import LoginForm from '../components/LoginForm'
+import {Typography, Box} from "@mui/material";
+
 function LoginPage( {onLogin} )
 {
     return (
-        <div>
-            <h1>Welcome to This Casting App</h1>
+        <Box sx={{textAlign: "center", mt:4 }}>
+            <Typography variant="h3" 
+                sx={{
+                    fontFamily: "Rancho, cursive",
+                    fontWeight: "400",
+                    fontStyle: "normal"
+            }}>
+                Welcome to Our Casting App
+            </Typography>
             <LoginForm onLogin={onLogin} />
-        </div>
+        </Box>
     );
 }
 

@@ -42,7 +42,9 @@ export default function Layout({ title = "My App", isLoggedIn = false, onLogout,
                     <IconButton edge="start" onClick={() => setOpen(!open)}>
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" sx={{ ml: 1 }}>
+                    <Typography variant="h6" sx={{ ml: 1 }}
+                                sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold", fontStyle: "normal" }}
+                    >
                         {title}
                     </Typography>
                 </Toolbar>
@@ -52,8 +54,14 @@ export default function Layout({ title = "My App", isLoggedIn = false, onLogout,
             <Drawer
                 variant="persistent"
                 open={open}
-                PaperProps={{ sx: { width: drawerWidth, borderRight: "1px solid", borderColor: "divider" } }}
-                sx={{ "& .MuiDrawer-paper": { top: 64 } }} // below AppBar (64px default)
+                PaperProps={{
+                    sx: {
+                        width: drawerWidth,
+                        borderRight: "1px solid",
+                        borderColor: "divider",
+                        top: 64
+                    }
+                }}
             >
                 <Toolbar />
                 <List>
@@ -61,30 +69,42 @@ export default function Layout({ title = "My App", isLoggedIn = false, onLogout,
                         <>
                             <ListItemButton component={Link} to="/">
                                 <ListItemIcon><LoginIcon /></ListItemIcon>
-                                <ListItemText primary="Login" />
+                                <ListItemText primary="Login"
+                                              primaryTypographyProps={{ sx: { fontFamily: "'Fondamento', cursive" } }}
+                                />
                             </ListItemButton>
                             <ListItemButton component={Link} to="/register">
                                 <ListItemIcon><AppRegistrationIcon /></ListItemIcon>
-                                <ListItemText primary="Register" />
+                                <ListItemText primary="Register"
+                                              primaryTypographyProps={{ sx: { fontFamily: "'Fondamento', cursive" } }}
+                                />
                             </ListItemButton>
                         </>
                     ) : (
                         <>
                             <ListItemButton component={Link} to="/profile">
                                 <ListItemIcon><PersonIcon /></ListItemIcon>
-                                <ListItemText primary="Profile" />
+                                <ListItemText primary="Profile"
+                                              primaryTypographyProps={{ sx: { fontFamily: "'Rancho', cursive" } }}
+                                />
                             </ListItemButton>
                             <ListItemButton component={Link} to="/create">
                                 <ListItemIcon><AddBoxIcon /></ListItemIcon>
-                                <ListItemText primary="Create Casting Ad" />
+                                <ListItemText primary="Create Casting Ad"
+                                              primaryTypographyProps={{ sx: { fontFamily: "'Fondamento', cursive" } }}
+                                />
                             </ListItemButton>
                             <ListItemButton component={Link} to="/adList">
                                 <ListItemIcon><ListAltIcon /></ListItemIcon>
-                                <ListItemText primary="Ad List" />
+                                <ListItemText primary="Ad List"
+                                              primaryTypographyProps={{ sx: { fontFamily: "'Fondamento', cursive" } }}
+                                />
                             </ListItemButton>
                             <ListItemButton onClick={onLogout}>
                                 <ListItemIcon><LogoutIcon /></ListItemIcon>
-                                <ListItemText primary="Logout" />
+                                <ListItemText primary="Logout"
+                                              primaryTypographyProps={{ sx: { fontFamily: "'Fondamento', cursive" } }}
+                                />
                             </ListItemButton>
                         </>
                     )}
@@ -96,6 +116,7 @@ export default function Layout({ title = "My App", isLoggedIn = false, onLogout,
             <Box
                 component="main"
                 sx={{
+                    
                     flexGrow: 1,
                     ml: open ? `${drawerWidth}px` : 0,
                     transition: "margin-left 200ms ease",

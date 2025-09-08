@@ -50,7 +50,9 @@ function LoginForm( {onLogin} )
             sx={{ '& .MuiTextField-root': { m: 1.5, width: '30ch' } }}
             onSubmit={handleLogin}>
             
-            <Typography variant="h5">
+            <Typography variant="h5"
+                        sx={{ fontFamily: "'Fondamento', cursive" }}
+            >
                 Login
             </Typography>
             <br/>
@@ -74,7 +76,9 @@ function LoginForm( {onLogin} )
                 helperText={error.password}
             />
             <br />
-            <Button type="submit">Login</Button>
+            <Button type="submit"
+                    sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}
+            >Login</Button>
         </Box>
     );
 }
