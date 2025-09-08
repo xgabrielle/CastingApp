@@ -171,10 +171,23 @@ export default function AdsListPage() {
                                             </Avatar>
                                         </ListItemAvatar>
                                         <ListItemText
-                                        primary={<Link to={`/adview/${ad.id}`}>{ad.adTitle || "No Title"}</Link>}
-                                        secondary={dateString}
-                                        >
-                                        </ListItemText>
+                                            primary={
+                                                <Typography 
+                                                    variant="h6"
+                                                    sx={{fontFamily: "'Fondamento', cursive"}}
+                                                >
+                                                    <Link to={`/adview/${ad.id}`}>{ad.adTitle || "No Title"}</Link>
+                                                </Typography>
+                                            }
+                                            secondary={
+                                                <Typography
+                                                    variant="body2"
+                                                    sx={{fontFamily: "'Fondamento', cursive"}}
+                                                >
+                                                    {dateString}
+                                                </Typography>
+                                            }
+                                        />
                                     </ListItem>
                                 </List>
                                 
