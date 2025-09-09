@@ -41,7 +41,7 @@ function AdView (){
     
     return (
         <div className="p-6 max-w-xl mx-auto bg-white shadow rounded">
-            <h1 className="text-2xl font-bold mb-2">{ad.adTitle || 'No Title'}</h1>
+            <h1 className="text-2xl font-bold mb-2">{ad.title || 'No Title'}</h1>
             <p className="mb-2 text-gray-700">{ad.description || 'No description provided.'}</p>
             <p className="mb-2 text-gray-600">Created by: {ad.userName || 'Unknown'}</p>
             <p className="mb-2 text-gray-500">Uploaded: {dateString}</p>
