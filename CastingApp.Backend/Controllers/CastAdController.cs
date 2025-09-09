@@ -78,6 +78,7 @@ public class CastAdController : ControllerBase
 
         var dto = new GetAdDTO
         {
+            Id = ad.Id,
             Title = ad.AdTitle,
             Description = ad.Description,
             UploadDate = ad.UploadDate,
