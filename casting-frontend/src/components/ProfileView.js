@@ -23,8 +23,12 @@ function ProfileView({ user })
                 <ProfileLayout label="Email" value={user?.email}/>
             <br/>    
             <Link to="edit">
-                
-                <Button sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}
+
+                <Button
+                    type="submit"
+                    variant="outlined"
+                    color="Black"
+                    sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold", color: "Black" }}
                 >
                     Edit Profile
                 </Button>
