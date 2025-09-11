@@ -7,12 +7,13 @@ function LoginPage( {onLogin} )
         <Box sx={{textAlign: "center", mt:4 }}>
             <Typography variant="h3" 
                 sx={{
-                    fontFamily: "Rancho, cursive",
-                    fontWeight: "400",
+                    fontFamily: "Oswald, sans-serif",
+                    fontWeight: "Bold",
                     fontStyle: "normal"
             }}>
                 Welcome to Our Casting App
             </Typography>
+            <br/>
             <LoginForm onLogin={onLogin} />
         </Box>
     );

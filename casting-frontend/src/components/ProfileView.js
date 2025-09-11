@@ -6,19 +6,28 @@ function ProfileView({ user })
     return(
         <Card sx={{ maxWidth: 1000, m: "auto", p: 3 }}>
             <CardContent>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5"
+                            color="grey"
+                            sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}           
+                            gutterBottom>
                     Your Profile
                 </Typography>
+                <br/>
             <img
                 src={user?.profileImageUrl ? `http://localhost:5049${user.profileImageUrl}` : "https://placehold.co/100x100"}
                 alt={"Profile"}
                 style={{borderRadius: "20%", width: "100px", height: "100px"}}
             />
+                
                 <ProfileLayout label="Name" value={user?.profileName}/>
                 <ProfileLayout label="Email" value={user?.email}/>
-                
+            <br/>    
             <Link to="edit">
-                <Button>Edit Profile</Button>
+                
+                <Button sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}
+                >
+                    Edit Profile
+                </Button>
             </Link>
 
             </CardContent>
@@ -30,11 +39,12 @@ function ProfileLayout({label, value})
 {
     return(
        <Box>
+           <br/>
             <Typography
                 component="span"
                 variant="body2"
                 color="text.secondary"
-                sx={{ fontWeight: 500 }}
+                sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}
             >
                 {label}:
                 
@@ -42,7 +52,7 @@ function ProfileLayout({label, value})
             <Typography
                 component="span"
                 variant="body1"
-                sx={{ fontWeight: 400 }}
+                sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "200" }}
             >
                 {value}
             </Typography>

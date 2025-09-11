@@ -43,7 +43,7 @@ export default function Layout({ title = "My App", isLoggedIn = false, onLogout,
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" sx={{ ml: 1 }}
-                                sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold", fontStyle: "normal" }}
+                                sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold", fontStyle: "normal" }}
                     >
                         {title}
                     </Typography>
@@ -70,13 +70,13 @@ export default function Layout({ title = "My App", isLoggedIn = false, onLogout,
                             <ListItemButton component={Link} to="/">
                                 <ListItemIcon><LoginIcon /></ListItemIcon>
                                 <ListItemText primary="Login"
-                                              primaryTypographyProps={{ sx: { fontFamily: "'Fondamento', cursive" } }}
+                                              primaryTypographyProps={{ sx: { fontFamily: "Oswald, sans-serif"} }}
                                 />
                             </ListItemButton>
                             <ListItemButton component={Link} to="/register">
                                 <ListItemIcon><AppRegistrationIcon /></ListItemIcon>
                                 <ListItemText primary="Register"
-                                              primaryTypographyProps={{ sx: { fontFamily: "'Fondamento', cursive" } }}
+                                              primaryTypographyProps={{ sx: { fontFamily: "Oswald, sans-serif" } }}
                                 />
                             </ListItemButton>
                         </>
@@ -85,25 +85,25 @@ export default function Layout({ title = "My App", isLoggedIn = false, onLogout,
                             <ListItemButton component={Link} to="/profile">
                                 <ListItemIcon><PersonIcon /></ListItemIcon>
                                 <ListItemText primary="Profile"
-                                              primaryTypographyProps={{ sx: { fontFamily: "'Rancho', cursive" } }}
+                                              primaryTypographyProps={{ sx: { fontFamily: "Oswald, sans-serif" } }}
                                 />
                             </ListItemButton>
                             <ListItemButton component={Link} to="/create">
                                 <ListItemIcon><AddBoxIcon /></ListItemIcon>
                                 <ListItemText primary="Create Casting Ad"
-                                              primaryTypographyProps={{ sx: { fontFamily: "'Fondamento', cursive" } }}
+                                              primaryTypographyProps={{ sx: { fontFamily: "Oswald, sans-serif" } }}
                                 />
                             </ListItemButton>
                             <ListItemButton component={Link} to="/adList">
                                 <ListItemIcon><ListAltIcon /></ListItemIcon>
                                 <ListItemText primary="Ad List"
-                                              primaryTypographyProps={{ sx: { fontFamily: "'Fondamento', cursive" } }}
+                                              primaryTypographyProps={{ sx: { fontFamily: "Oswald, sans-serif" } }}
                                 />
                             </ListItemButton>
                             <ListItemButton onClick={onLogout}>
                                 <ListItemIcon><LogoutIcon /></ListItemIcon>
                                 <ListItemText primary="Logout"
-                                              primaryTypographyProps={{ sx: { fontFamily: "'Fondamento', cursive" } }}
+                                              primaryTypographyProps={{ sx: { fontFamily: "Oswald, sans-serif" } }}
                                 />
                             </ListItemButton>
                         </>

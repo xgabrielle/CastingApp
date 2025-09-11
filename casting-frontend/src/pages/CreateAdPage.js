@@ -6,7 +6,7 @@ function CreateAdPage()
     return (
         <div>
             <Typography variant="h5"
-                        sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}>
+                        sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}>
                 Create Casting Ad
             </Typography>
             <CreateAdForm />

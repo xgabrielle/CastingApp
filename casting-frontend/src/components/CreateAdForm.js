@@ -121,7 +121,7 @@ export default function CreateAdForm() {
                 type="submit"
                 variant="outlined"
                 color="black"
-                sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}
+                sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}
                 >
                 Create Ad
             </Button>

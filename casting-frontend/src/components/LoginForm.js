@@ -51,7 +51,7 @@ function LoginForm( {onLogin} )
             onSubmit={handleLogin}>
             
             <Typography variant="h5"
-                        sx={{ fontFamily: "'Fondamento', cursive" }}
+                        sx={{ fontFamily: "Oswald, sans-serif" }}
             >
                 Login
             </Typography>
@@ -77,7 +77,7 @@ function LoginForm( {onLogin} )
             />
             <br />
             <Button type="submit"
-                    sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}
+                    sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "400" }}
             >Login</Button>
         </Box>
     );
