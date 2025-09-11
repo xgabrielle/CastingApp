@@ -1,12 +1,14 @@
 ﻿import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import API from '../api/axios';
+import {Card, CardContent, Typography, CardHeader, Avatar, Link} from "@mui/material";
 
 function AdView (){
     const {id} = useParams();
     const [isLoading, setLoading] = useState(true);
     const [ad, setAd] = useState(null);
     const [error, setError] = useState(null);
+    
 
     useEffect(() => {
         const fetchAd = async () => {
@@ -40,19 +42,56 @@ function AdView (){
     }
     
     return (
-        <div className="p-6 max-w-xl mx-auto bg-white shadow rounded">
-            <h1 className="text-2xl font-bold mb-2">{ad.title || 'No Title'}</h1>
-            <p className="mb-2 text-gray-700">{ad.description || 'No description provided.'}</p>
-            <p className="mb-2 text-gray-600">Created by: {ad.userName || 'Unknown'}</p>
-            <p className="mb-2 text-gray-500">Uploaded: {dateString}</p>
+        <Card sx={{ p: 2, m: 2 }}>
+            <CardContent >
+                <Typography 
+                    variant="h5" 
+                    gutterBottom 
+                    fontFamily="Oswald, sans-serif"
+                    fontWeight="Bold"
+                >
+                    {ad.title || 'No Title'}
+                </Typography>
+                <Typography variant="h7" fontFamily="Oswald, sans-serif" fontWeight="500"
+                            sx={{textDecoration: "underline"}}>
+                    Synopsis:
+                </Typography>
+                <Typography variant="body1" fontFamily="Oswald, sans-serif">
+                {ad.description || 'No description provided.'}
+                </Typography>
+                <br/>
+                <CardHeader
+                    avatar={<Avatar alt="John Doe" src="/creator.jpg" />}
+                    title={`By: ${ad.userName || 'Unknown'}`}
+                    subheader={`Created on: ${dateString}`}
+                    titleTypographyProps={{
+                    sx: {fontFamily: "Oswald, sans-serif", fontWeight: "normal"}
+                    }}
+                    subheaderTypographyProps={{
+                        sx: {fontFamily: "Oswald, sans-serif", fontWeight: "normal"}
+                    }}
+                />
+            </CardContent>
             {ad.pdfDownloadUrl ? (
-                <a href={`http://localhost:5049${ad.pdfDownloadUrl}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">View PDF</a>
+                <Link
+                    href={`http://localhost:5049${ad.pdfDownloadUrl}`}
+                    sx={{fontFamily: "Oswald, sans-serif"}}
+                    style={{color: "black", textDecoration: "none"}}
+                    onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
+                    onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+                    
+                >
+                  View Script 
+                </Link>
+                
             ) : (
-                <p className="text-red-500">No PDF available</p>
+                <Typography sx={{fontFamily: "Oswald, sans-serif"}}>
+                    No PDF available
+                </Typography>
                 )
             }
             
-        </div>
+        </Card>
     );
 }
 export default AdView;

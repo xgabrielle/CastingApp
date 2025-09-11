@@ -125,13 +125,13 @@ export default function AdsListPage() {
         <div className="p-6 max-w-6xl mx-auto">
             <Typography variant="h5"
                         color="grey"
-                        sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}>
+                        sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}>
                 Ad List
             </Typography>
             <br/>
             <Typography variant="body2"
                         color="grey"
-                        sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}>
+                        sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}>
                 Number of ads: {searchInput.trim() ? visibleAds.length : ads.length}
             </Typography>
             <br/>
@@ -145,7 +145,8 @@ export default function AdsListPage() {
             />
             <Button onClick={handleSearch}
                     variant="outlined"
-                    sx={{ fontFamily: "'Fondamento', cursive", fontWeight: "Bold" }}>
+                    color="Black"
+                    sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}>
                 Search
             </Button>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -174,15 +175,23 @@ export default function AdsListPage() {
                                             primary={
                                                 <Typography 
                                                     variant="h6"
-                                                    sx={{fontFamily: "'Fondamento', cursive"}}
+                                                    sx={{fontFamily: "Oswald, sans-serif"}}
                                                 >
-                                                    <Link to={`/adview/${ad.id}`}>{ad.adTitle || "No Title"}</Link>
+                                                    <Link 
+                                                        to={`/adview/${ad.id}`}
+                                                        style={{color: "black", textDecoration: "none"}}
+                                                        onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
+                                                        onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+                                                    >
+                                                        {ad.adTitle || "No Title"}
+                                                    </Link>
                                                 </Typography>
                                             }
                                             secondary={
                                                 <Typography
                                                     variant="body2"
-                                                    sx={{fontFamily: "'Fondamento', cursive"}}
+                                                    color="grey"
+                                                    sx={{fontFamily: "Oswald, sans-serif"}}
                                                 >
                                                     {dateString}
                                                 </Typography>
