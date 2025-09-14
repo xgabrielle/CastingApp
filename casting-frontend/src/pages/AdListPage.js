@@ -124,14 +124,14 @@ export default function AdsListPage() {
     return (
         <div className="p-6 max-w-6xl mx-auto">
             <Typography variant="h5"
-                        color="grey"
-                        sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}>
+                        color="primary"
+                        sx={{ fontWeight: "Bold" }}>
                 Ad List
             </Typography>
             <br/>
             <Typography variant="body2"
-                        color="grey"
-                        sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}>
+                        color="secondary"
+                        sx={{ fontWeight: "Bold" }}>
                 Number of ads: {searchInput.trim() ? visibleAds.length : ads.length}
             </Typography>
             <br/>
@@ -145,7 +145,7 @@ export default function AdsListPage() {
             />
             <Button onClick={handleSearch}
                     variant="outlined"
-                    color="Black"
+                    color="primary"
                     sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}>
                 Search
             </Button>
@@ -167,19 +167,19 @@ export default function AdsListPage() {
                                 <List>
                                     <ListItem>
                                         <ListItemAvatar>
-                                            <Avatar>
-                                                <FolderIcon/>
+                                            <Avatar sx={{bgcolor: "secondary.main"}}>
+                                                <FolderIcon sx={{ color: "primary.main" }}/>
                                             </Avatar>
                                         </ListItemAvatar>
                                         <ListItemText
                                             primary={
                                                 <Typography 
                                                     variant="h6"
-                                                    sx={{fontFamily: "Oswald, sans-serif"}}
+                                                    sx={{color: "primary.main"}}
                                                 >
                                                     <Link 
                                                         to={`/adview/${ad.id}`}
-                                                        style={{color: "black", textDecoration: "none"}}
+                                                        style={{ textDecoration: "none", color: "inherit"}}
                                                         onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
                                                         onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
                                                     >
@@ -190,8 +190,7 @@ export default function AdsListPage() {
                                             secondary={
                                                 <Typography
                                                     variant="body2"
-                                                    color="grey"
-                                                    sx={{fontFamily: "Oswald, sans-serif"}}
+                                                    color="secondary"
                                                 >
                                                     {dateString}
                                                 </Typography>

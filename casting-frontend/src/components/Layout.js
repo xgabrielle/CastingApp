@@ -35,15 +35,15 @@ export default function Layout({ title = "My App", isLoggedIn = false, onLogout,
             <AppBar
                 position="fixed"
                 elevation={0}
-                color="inherit"
-                sx={{ borderBottom: "1px solid", borderColor: "divider" }}
+                color="paper"
+                sx={{ borderBottom: "1px solid", borderColor: "secondary.main" }}
             >
                 <Toolbar>
                     <IconButton edge="start" onClick={() => setOpen(!open)}>
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" sx={{ ml: 1 }}
-                                sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold", fontStyle: "normal" }}
+                                sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold", fontStyle: "normal", color: "primary.main" }}
                     >
                         {title}
                     </Typography>
@@ -58,7 +58,7 @@ export default function Layout({ title = "My App", isLoggedIn = false, onLogout,
                     sx: {
                         width: drawerWidth,
                         borderRight: "1px solid",
-                        borderColor: "divider",
+                        borderColor: "secondary.main",
                         top: 64
                     }
                 }}
@@ -68,40 +68,40 @@ export default function Layout({ title = "My App", isLoggedIn = false, onLogout,
                     {!isLoggedIn ? (
                         <>
                             <ListItemButton component={Link} to="/">
-                                <ListItemIcon><LoginIcon /></ListItemIcon>
+                                <ListItemIcon sx={{ color: "primary.main" }}><LoginIcon /></ListItemIcon>
                                 <ListItemText primary="Login"
-                                              primaryTypographyProps={{ sx: { fontFamily: "Oswald, sans-serif"} }}
+                                              primaryTypographyProps={{ sx: { color: "primary.main"} }}
                                 />
                             </ListItemButton>
                             <ListItemButton component={Link} to="/register">
-                                <ListItemIcon><AppRegistrationIcon /></ListItemIcon>
+                                <ListItemIcon sx={{ color: "primary.main" }}><AppRegistrationIcon /></ListItemIcon>
                                 <ListItemText primary="Register"
-                                              primaryTypographyProps={{ sx: { fontFamily: "Oswald, sans-serif" } }}
+                                              primaryTypographyProps={{ sx: { color: "primary.main" } }}
                                 />
                             </ListItemButton>
                         </>
                     ) : (
                         <>
                             <ListItemButton component={Link} to="/profile">
-                                <ListItemIcon><PersonIcon /></ListItemIcon>
+                                <ListItemIcon sx={{ color: "primary.main" }}><PersonIcon /></ListItemIcon>
                                 <ListItemText primary="Profile"
                                               primaryTypographyProps={{ sx: { fontFamily: "Oswald, sans-serif" } }}
                                 />
                             </ListItemButton>
                             <ListItemButton component={Link} to="/create">
-                                <ListItemIcon><AddBoxIcon /></ListItemIcon>
+                                <ListItemIcon sx={{ color: "primary.main" }}><AddBoxIcon /></ListItemIcon>
                                 <ListItemText primary="Create Casting Ad"
                                               primaryTypographyProps={{ sx: { fontFamily: "Oswald, sans-serif" } }}
                                 />
                             </ListItemButton>
                             <ListItemButton component={Link} to="/adList">
-                                <ListItemIcon><ListAltIcon /></ListItemIcon>
+                                <ListItemIcon sx={{ color: "primary.main" }}><ListAltIcon /></ListItemIcon>
                                 <ListItemText primary="Ad List"
                                               primaryTypographyProps={{ sx: { fontFamily: "Oswald, sans-serif" } }}
                                 />
                             </ListItemButton>
                             <ListItemButton onClick={onLogout}>
-                                <ListItemIcon><LogoutIcon /></ListItemIcon>
+                                <ListItemIcon sx={{ color: "primary.main" }}><LogoutIcon /></ListItemIcon>
                                 <ListItemText primary="Logout"
                                               primaryTypographyProps={{ sx: { fontFamily: "Oswald, sans-serif" } }}
                                 />

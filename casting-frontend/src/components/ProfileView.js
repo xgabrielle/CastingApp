@@ -7,7 +7,7 @@ function ProfileView({ user })
         <Card sx={{ maxWidth: 1000, m: "auto", p: 3 }}>
             <CardContent>
                 <Typography variant="h5"
-                            color="grey"
+                            color="secondary"
                             sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}           
                             gutterBottom>
                     Your Profile
@@ -27,8 +27,8 @@ function ProfileView({ user })
                 <Button
                     type="submit"
                     variant="outlined"
-                    color="Black"
-                    sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold", color: "Black" }}
+                    color="inherit"
+                    sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold", color: "primary.main" }}
                 >
                     Edit Profile
                 </Button>
@@ -47,7 +47,7 @@ function ProfileLayout({label, value})
             <Typography
                 component="span"
                 variant="body2"
-                color="text.secondary"
+                color="primary"
                 sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}
             >
                 {label}:
@@ -56,6 +56,7 @@ function ProfileLayout({label, value})
             <Typography
                 component="span"
                 variant="body1"
+                color="primary"
                 sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "200" }}
             >
                 {value}

@@ -46,12 +46,12 @@ function LoginForm( {onLogin} )
     return (
         <Box
             component="form"
-            color="grey"
             sx={{ '& .MuiTextField-root': { m: 1.5, width: '30ch' } }}
             onSubmit={handleLogin}>
             
             <Typography variant="h5"
                         sx={{ fontFamily: "Oswald, sans-serif" }}
+                        color="secondary"
             >
                 Login
             </Typography>
@@ -77,6 +77,7 @@ function LoginForm( {onLogin} )
             />
             <br />
             <Button type="submit"
+                    color="primary"
                     sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "400" }}
             >Login</Button>
         </Box>

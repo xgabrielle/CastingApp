@@ -5,9 +5,9 @@ function LoginPage( {onLogin} )
 {
     return (
         <Box sx={{textAlign: "center", mt:4 }}>
-            <Typography variant="h3" 
+            <Typography variant="h3"
+                        color="primary"
                 sx={{
-                    fontFamily: "Oswald, sans-serif",
                     fontWeight: "Bold",
                     fontStyle: "normal"
             }}>

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import API from '../api/axios';
 import {Card, CardContent, Typography, CardHeader, Avatar, Link} from "@mui/material";
 
-function AdView (){
+function AdView (user){
     const {id} = useParams();
     const [isLoading, setLoading] = useState(true);
     const [ad, setAd] = useState(null);
@@ -16,6 +16,7 @@ function AdView (){
             setError(null);
             try{
                 const response = await API.get(`/castad/${id}`);
+                console.log("Profile image:", user?.profileImageUrl);
                 setAd(response.data);
             }
             catch (e) {
@@ -49,19 +50,31 @@ function AdView (){
                     gutterBottom 
                     fontFamily="Oswald, sans-serif"
                     fontWeight="Bold"
+                    color="primary"
                 >
                     {ad.title || 'No Title'}
                 </Typography>
-                <Typography variant="h7" fontFamily="Oswald, sans-serif" fontWeight="500"
+                <Typography variant="h7" 
+                            color="secondary"
+                            fontFamily="Oswald, sans-serif"
+                            fontWeight="500"
                             sx={{textDecoration: "underline"}}>
                     Synopsis:
                 </Typography>
-                <Typography variant="body1" fontFamily="Oswald, sans-serif">
+                <Typography variant="body1" 
+                            color="primary"
+                            fontFamily="Oswald, sans-serif">
                 {ad.description || 'No description provided.'}
                 </Typography>
                 <br/>
                 <CardHeader
-                    avatar={<Avatar alt="John Doe" src="/creator.jpg" />}
+                    avatar={
+                        <Avatar 
+                            src={user?.profileImageUrl ? `http://localhost:5049${user.profileImageUrl}` : "https://placehold.co/100x100"}
+                            alt="Profile"
+                            sx={{ width: 56, height: 56 }}
+                        />
+                    }
                     title={`By: ${ad.userName || 'Unknown'}`}
                     subheader={`Created on: ${dateString}`}
                     titleTypographyProps={{
@@ -76,7 +89,7 @@ function AdView (){
                 <Link
                     href={`http://localhost:5049${ad.pdfDownloadUrl}`}
                     sx={{fontFamily: "Oswald, sans-serif"}}
-                    style={{color: "black", textDecoration: "none"}}
+                    style={{color: "primary.main", textDecoration: "none"}}
                     onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
                     onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
                     

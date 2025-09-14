@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 import './index.css'
-
+//import theme from "./components/theme"
 import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -14,14 +14,19 @@ import "@fontsource/roboto/700.css";
 const theme = createTheme({
     palette: {
         mode: "light",
-        primary: { main: "#6366f1" },   // indigo
-        secondary: { main: "#10b981" }, // emerald
-        background: { default: "#f6f7fb", paper: "#ffffff" }
+        background: {
+            default: "#DCD0A8",
+            paper: "#FFF9E5"
+        },
+        primary: { main: "#4d3e19" },
+        secondary: { main: "#B1AB86" },
+        
     },
     shape: { borderRadius: 12 },
     typography: {
         fontFamily:
-            'Roboto, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif'
+            'Oswald,sans-serif',
+        color: 'primary.main'
     }
 });
 

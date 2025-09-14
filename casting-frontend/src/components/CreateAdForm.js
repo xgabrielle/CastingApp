@@ -72,10 +72,11 @@ export default function CreateAdForm() {
             onSubmit={handleSubmit}>
             <TextField
                 type="text"
+                //color="secondary"
                 placeholder="Ad Title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="border p-2 w-full"
+                //className="border p-2 w-full"
                 variant="standard"
                 error={Boolean(error.title)}
                 helperText={error.title}
@@ -120,7 +121,7 @@ export default function CreateAdForm() {
             <Button
                 type="submit"
                 variant="outlined"
-                color="black"
+                color="primary"
                 sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}
                 >
                 Create Ad
