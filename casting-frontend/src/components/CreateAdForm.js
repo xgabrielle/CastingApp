@@ -1,6 +1,6 @@
-﻿import { useState } from 'react';
+﻿import { useState, useRef } from 'react';
 import API from '../api/axios';
-import {TextField, Button, Box} from "@mui/material";
+import {TextField, Button, Box, Typography} from "@mui/material";
 
 export default function CreateAdForm() {
     const [title, setTitle] = useState('');
@@ -8,7 +8,7 @@ export default function CreateAdForm() {
     const [description, setDescription] = useState('');
     const [pdfFile, setPdfFile] = useState(null);
     const [error, setError] = useState({title:'', userName:'', description:'', pdfFile:''});
-
+    const fileInputRef = useRef();
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -65,6 +65,17 @@ export default function CreateAdForm() {
         }
     };
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file && file.type !== "application/pdf") {
+            setError({ pdfFile: "Only PDF files are allowed" });
+            setPdfFile(null);
+            return;
+        }
+        setError({});
+        setPdfFile(file);
+    };
+
     return (
         <Box
             component="form"
@@ -107,15 +118,33 @@ export default function CreateAdForm() {
                 helperText={error.description}
             />
             <br/>
-            <TextField
+            <input
                 type="file"
                 accept=".pdf"
-                variant="standard"
-                onChange={(e) => setPdfFile(e.target.files[0])}
-                className="block"
-                error={Boolean(error.pdfFile)}
-                helperText={error.pdfFile}
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
             />
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => fileInputRef.current.click()}
+                sx={{ fontFamily: "Oswald, sans-serif", fontWeight: 500, mt: 2 }}
+            >
+                Upload PDF
+            </Button>
+            {pdfFile && (
+                <Typography sx={{ mt: 1 }}>
+                    Selected: {pdfFile.name}
+                </Typography>
+            )}
+
+            {/* Error display */}
+            {error.pdfFile && (
+                <Typography color="error" sx={{ mt: 1 }}>
+                    {error.pdfFile}
+                </Typography>
+            )}
             <br/>
             <br/>
             <Button
