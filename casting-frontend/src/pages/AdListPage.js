@@ -138,7 +138,7 @@ export default function AdsListPage() {
             <TextField
                 type="text"
                 placeholder="Search ads..."
-                className="mb-4 p-2 border rounded w-full"
+                //className="mb-4 p-2 border rounded w-full"
                 value={searchInput}
                 variant="standard"
                 onChange={(e) => setSearchInput(e.target.value)}
@@ -149,6 +149,14 @@ export default function AdsListPage() {
                     sx={{ fontFamily: "Oswald, sans-serif", fontWeight: "Bold" }}>
                 Search
             </Button>
+            
+            <Box
+                sx={{
+                    mt: 3,
+                    height: 400,          // 🔑 adjust this value for how tall the list should be
+                    overflowY: "auto",    // 🔑 makes only this area scrollable
+                }}>
+                
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {(searchInput.trim() ? visibleAds.length === 0 : ads.length === 0) ? (
                     <p className="col-span-full text-center text-gray-500">No ads found.</p>
@@ -163,8 +171,7 @@ export default function AdsListPage() {
                             }
                         }
                         return (
-                            <Box key={ad.id} className="bg-white shadow p-4 rounded">
-                                <List>
+                                <List key={ad.id} >
                                     <ListItem>
                                         <ListItemAvatar>
                                             <Avatar sx={{bgcolor: "secondary.main"}}>
@@ -198,12 +205,11 @@ export default function AdsListPage() {
                                         />
                                     </ListItem>
                                 </List>
-                                
-                            </Box>
                         );
                     })
                 )}
             </div>
+            </Box>
         </div>
     );
 }
